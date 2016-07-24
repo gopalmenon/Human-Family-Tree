@@ -5,7 +5,7 @@
  *      Author: gopalmenon
  */
 
-#include <MinimumEditDistanceFinder.hpp>
+#include "MinimumEditDistanceFinder.hpp"
 
 #include <algorithm>
 #include <string>
@@ -60,4 +60,9 @@ void MinimumEditDistanceFinder::alignStrings() {
 //Return the minimum of three integers
 int MinimumEditDistanceFinder::getMinimumScore(int integer1, int integer2, int integer3) {
 	return std::min(std::min(integer1, integer2), integer3);
+}
+
+//Return the alignment score or edit distance
+int MinimumEditDistanceFinder::getAlignmentScore() {
+	return this->alignmentScore;
 }
