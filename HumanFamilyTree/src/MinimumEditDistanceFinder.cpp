@@ -26,6 +26,7 @@ void MinimumEditDistanceFinder::alignStrings() {
 
 	//Create a strip of memory two columns wide that will be slid along from beginning to end of string A
 	int  twoColumnScoreMatrix[this->stringBLength + 1][2];
+	int actualColumn, actualPreviousColumn;
 
 	for (int columnCounter = 0; columnCounter <= this->stringALength; ++columnCounter) {
 
@@ -37,16 +38,19 @@ void MinimumEditDistanceFinder::alignStrings() {
 			continue;
 		}
 
+		actualColumn = columnCounter % 2;
+		actualPreviousColumn = (columnCounter - 1) % 2;
+
 		//Fill in the alignment scores one column at a time
 		for (int rowCounter = 0; rowCounter <= this->stringBLength; ++rowCounter) {
 
 			if (rowCounter == 0) {
-				twoColumnScoreMatrix[rowCounter][columnCounter % 2] = columnCounter;
+				twoColumnScoreMatrix[rowCounter][actualColumn] = columnCounter;
 			} else {
-				twoColumnScoreMatrix[rowCounter][columnCounter % 2] = getMinimumScore(twoColumnScoreMatrix[rowCounter - 1][columnCounter % 2] + 1,
-																					  twoColumnScoreMatrix[rowCounter][(columnCounter - 1) % 2] + 1,
-																					  twoColumnScoreMatrix[rowCounter - 1][(columnCounter - 1) % 2] +
-																				   	 (this->stringA.at(columnCounter - 1) == this->stringB.at(rowCounter - 1) ? 0 : 1));
+				twoColumnScoreMatrix[rowCounter][actualColumn] = getMinimumScore(twoColumnScoreMatrix[rowCounter - 1][actualColumn] + 1,
+																				 twoColumnScoreMatrix[rowCounter][actualPreviousColumn] + 1,
+																				 twoColumnScoreMatrix[rowCounter - 1][actualPreviousColumn] +
+																				(this->stringA.at(columnCounter - 1) == this->stringB.at(rowCounter - 1) ? 0 : 1));
 			}
 
 		}

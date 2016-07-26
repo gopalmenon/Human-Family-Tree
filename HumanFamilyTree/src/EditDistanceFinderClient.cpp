@@ -22,7 +22,6 @@ std::string getRandomNucleotideString() {
 	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
 	std::default_random_engine generator(seed);
 	std::uniform_int_distribution<int> distribution(0, 3);
-	int randomIndex = distribution(generator);
 
 	std::string mitochondrialDnaString;
 
