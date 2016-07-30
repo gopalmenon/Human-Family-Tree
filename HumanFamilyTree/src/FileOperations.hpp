@@ -5,6 +5,8 @@
  *      Author: gopalmenon
  */
 
+#include "MitochondrialDnaSample.hpp"
+
 #include <algorithm>
 #include <cctype>
 #include <fstream>
@@ -75,17 +77,18 @@ std::vector<std::string> getDirectoryListing(std::string directoryListingFileNam
 
 }
 
-//Return a container with the list of file contents and another list containing
-//the file names without the extension
-void getAllFiles(std::vector<std::string>& contentsOfAlFiles, std::vector<std::string>& dataLabels) {
+//Return a container with the list of file contents
+std::vector<MitochondrialDnaSample> getAllFileContents() {
 
+	int counter = 0;
+	std::vector<MitochondrialDnaSample> dnaSamples;
 	for (std::string& fileName :  getDirectoryListing(MTDNA_FILE_LISTING_TEXT_FILE)) {
 
-		contentsOfAlFiles.push_back(getFileContents(fileName));
-		dataLabels.push_back(stripExtension(fileName));
+		dnaSamples.push_back(MitochondrialDnaSample(getFileContents(fileName), stripExtension(fileName), counter++));
 
 	}
 
+	return dnaSamples;
 }
 
 #endif /* FILEOPERATIONS_HPP_ */
