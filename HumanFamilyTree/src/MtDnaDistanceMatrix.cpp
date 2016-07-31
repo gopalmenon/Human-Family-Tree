@@ -34,6 +34,13 @@ MtDnaDistanceMatrix::MtDnaDistanceMatrix(MtDnaDistanceMatrix& mtDnaDistanceMatri
 	this->distanceMatrix = mtDnaDistanceMatrix.distanceMatrix;
 }
 
+//Copy constructor
+MtDnaDistanceMatrix::MtDnaDistanceMatrix (const MtDnaDistanceMatrix &other) {
+	this->samples = other.samples;
+	this->distanceMatrix = other.distanceMatrix;
+}
+
+
 //Get the distance between two samples using the distance matrix
 int MtDnaDistanceMatrix::getDistanceBetween(MitochondrialDnaSample sample1, MitochondrialDnaSample sample2) {
 

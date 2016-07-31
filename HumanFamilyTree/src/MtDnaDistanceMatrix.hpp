@@ -32,6 +32,9 @@ public:
 	//Constructor
 	MtDnaDistanceMatrix(std::vector<MitochondrialDnaSample> samples);
 
+	//Copy constructor
+	MtDnaDistanceMatrix (const MtDnaDistanceMatrix &other);
+
 	//Constructor
 	MtDnaDistanceMatrix(MtDnaDistanceMatrix& mtDnaDistanceMatrix);
 

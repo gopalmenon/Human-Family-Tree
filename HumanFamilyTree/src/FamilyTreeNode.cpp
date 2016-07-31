@@ -9,12 +9,26 @@
 #include "MtDnaDistanceMatrix.hpp"
 
 #include <map>
+#include <memory>
 #include <utility>
+#include <vector>
 
 //Constructor
 FamilyTreeNode::FamilyTreeNode(std::vector<MitochondrialDnaSample> samplesInNode, MtDnaDistanceMatrix mtDnaDistanceMatrix) : mtDnaDistanceMatrix(mtDnaDistanceMatrix) {
 	this->samplesInNode = samplesInNode;
+	this->leftChild = std::shared_ptr<FamilyTreeNode>(nullptr);
+	this->rightChild = std::shared_ptr<FamilyTreeNode>(nullptr);
 }
+
+//Copy constructor
+FamilyTreeNode::FamilyTreeNode (const FamilyTreeNode& other) : mtDnaDistanceMatrix(other.mtDnaDistanceMatrix) {
+	this->samplesInNode = other.samplesInNode;
+	this->leftChild = std::shared_ptr<FamilyTreeNode>(nullptr);
+	this->rightChild = std::shared_ptr<FamilyTreeNode>(nullptr);
+
+
+}
+
 
 //Return distance from another node
 float FamilyTreeNode::distanceFrom(FamilyTreeNode other) {
@@ -35,9 +49,32 @@ float FamilyTreeNode::distanceFrom(FamilyTreeNode other) {
 	return distanceFromOtherNode;
 }
 
-//Merge the nodes by adding the mtDNA samples in the other to the current one
-void FamilyTreeNode::mergeWith(FamilyTreeNode other) {
-	for (MitochondrialDnaSample mitochondrialDnaSample : other.samplesInNode) {
-		this->samplesInNode.push_back(mitochondrialDnaSample);
+//Set child nodes
+void FamilyTreeNode::setChildNodes(FamilyTreeNode leftChild, FamilyTreeNode rightChild) {
+	this->leftChild = std::make_shared<FamilyTreeNode>(leftChild);
+	this->rightChild = std::make_shared<FamilyTreeNode>(rightChild);
+}
+
+//Merge the nodes and return the merged node
+FamilyTreeNode FamilyTreeNode::mergeWith(FamilyTreeNode other) {
+
+	//Create a merged list of mtDNA samples
+	std::vector<MitochondrialDnaSample> mtDnaSamplesInMergedNode;
+
+	for (MitochondrialDnaSample mitochondrialDnaSample : this->samplesInNode) {
+		mtDnaSamplesInMergedNode.push_back(mitochondrialDnaSample);
 	}
+
+
+	for (MitochondrialDnaSample mitochondrialDnaSample : other.samplesInNode) {
+		mtDnaSamplesInMergedNode.push_back(mitochondrialDnaSample);
+	}
+
+	//Create a merged node
+	FamilyTreeNode mergedNode(mtDnaSamplesInMergedNode, this->mtDnaDistanceMatrix);
+
+	//Specify the child nodes for the merged node
+	mergedNode.setChildNodes(*this, other);
+
+	return mergedNode;
 }

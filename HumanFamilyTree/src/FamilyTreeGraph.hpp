@@ -10,6 +10,7 @@
 
 #include "FamilyTreeNode.hpp"
 #include "MitochondrialDnaSample.hpp"
+#include "MtDnaDistanceMatrix.hpp"
 
 #include <vector>
 
@@ -18,6 +19,11 @@ class FamilyTreeGraph {
 private:
 
 	std::vector<MitochondrialDnaSample> totalPopulation;
+	std::vector<FamilyTreeNode> graphNodes;
+	MtDnaDistanceMatrix mtDnaDistanceMatrix;
+
+	//Form initial clusters made up of mtDNA samples
+	void formInitialClusters();
 
 	//Run Hierarchical Clustering using UPGMA (Unweighted Pair Group Method with Arithmetic Mean)
 	void runHierarchicalClustering();
@@ -25,7 +31,7 @@ private:
 public:
 
 	//Constructor
-	FamilyTreeGraph(std::vector<MitochondrialDnaSample> totalPopulation);
+	FamilyTreeGraph(std::vector<MitochondrialDnaSample> totalPopulation, MtDnaDistanceMatrix mtDnaDistanceMatrix);
 
 };
 
