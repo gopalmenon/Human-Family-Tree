@@ -82,9 +82,10 @@ std::vector<MitochondrialDnaSample> getAllFileContents() {
 
 	int counter = 0;
 	std::vector<MitochondrialDnaSample> dnaSamples;
-	for (std::string& fileName :  getDirectoryListing(MTDNA_FILE_LISTING_TEXT_FILE)) {
-
-		dnaSamples.push_back(MitochondrialDnaSample(getFileContents(fileName), stripExtension(fileName), counter++));
+	for (std::string& fileName : getDirectoryListing(MTDNA_FILE_LISTING_TEXT_FILE)) {
+		if (trim(fileName).length() > 0) {
+			dnaSamples.push_back(MitochondrialDnaSample(getFileContents(fileName), stripExtension(fileName), counter++));
+		}
 
 	}
 

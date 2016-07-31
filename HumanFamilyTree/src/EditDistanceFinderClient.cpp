@@ -34,7 +34,7 @@ std::string getRandomNucleotideString() {
 	return mitochondrialDnaString;
 }
 
-int main() {
+int findEditDistance() {
 
 	std::string stringA(getRandomNucleotideString());
 	std::string stringB(getRandomNucleotideString());
