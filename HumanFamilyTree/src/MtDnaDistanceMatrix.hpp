@@ -32,6 +32,9 @@ public:
 	//Constructor
 	MtDnaDistanceMatrix(std::vector<MitochondrialDnaSample> samples);
 
+	//Constructor
+	MtDnaDistanceMatrix(MtDnaDistanceMatrix& mtDnaDistanceMatrix);
+
 	//Get the distance between two samples using the distance matrix
 	int getDistanceBetween(MitochondrialDnaSample sample1, MitochondrialDnaSample sample2);
 

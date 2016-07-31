@@ -28,6 +28,12 @@ MtDnaDistanceMatrix::MtDnaDistanceMatrix(std::vector<MitochondrialDnaSample> sam
 	fillDistanceMatrix();
 }
 
+//Constructor
+MtDnaDistanceMatrix::MtDnaDistanceMatrix(MtDnaDistanceMatrix& mtDnaDistanceMatrix) {
+	this->samples = mtDnaDistanceMatrix.samples;
+	this->distanceMatrix = mtDnaDistanceMatrix.distanceMatrix;
+}
+
 //Get the distance between two samples using the distance matrix
 int MtDnaDistanceMatrix::getDistanceBetween(MitochondrialDnaSample sample1, MitochondrialDnaSample sample2) {
 
