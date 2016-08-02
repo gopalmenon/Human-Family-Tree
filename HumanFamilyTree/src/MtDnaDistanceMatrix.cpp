@@ -28,12 +28,6 @@ MtDnaDistanceMatrix::MtDnaDistanceMatrix(std::vector<MitochondrialDnaSample> sam
 	fillDistanceMatrix();
 }
 
-//Constructor
-MtDnaDistanceMatrix::MtDnaDistanceMatrix(MtDnaDistanceMatrix& mtDnaDistanceMatrix) {
-	this->samples = mtDnaDistanceMatrix.samples;
-	this->distanceMatrix = mtDnaDistanceMatrix.distanceMatrix;
-}
-
 //Copy constructor
 MtDnaDistanceMatrix::MtDnaDistanceMatrix (const MtDnaDistanceMatrix &other) {
 	this->samples = other.samples;

@@ -12,6 +12,7 @@
 #include "MitochondrialDnaSample.hpp"
 #include "MtDnaDistanceMatrix.hpp"
 
+#include <queue>
 #include <vector>
 
 class FamilyTreeGraph {
@@ -34,6 +35,5 @@ public:
 	FamilyTreeGraph(std::vector<MitochondrialDnaSample> totalPopulation, MtDnaDistanceMatrix mtDnaDistanceMatrix);
 
 };
-
 
 #endif /* FAMILYTREEGRAPH_HPP_ */

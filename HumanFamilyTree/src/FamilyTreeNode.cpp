@@ -25,8 +25,6 @@ FamilyTreeNode::FamilyTreeNode (const FamilyTreeNode& other) : mtDnaDistanceMatr
 	this->samplesInNode = other.samplesInNode;
 	this->leftChild = std::shared_ptr<FamilyTreeNode>(nullptr);
 	this->rightChild = std::shared_ptr<FamilyTreeNode>(nullptr);
-
-
 }
 
 

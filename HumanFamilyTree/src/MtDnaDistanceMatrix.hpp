@@ -35,9 +35,6 @@ public:
 	//Copy constructor
 	MtDnaDistanceMatrix (const MtDnaDistanceMatrix &other);
 
-	//Constructor
-	MtDnaDistanceMatrix(MtDnaDistanceMatrix& mtDnaDistanceMatrix);
-
 	//Get the distance between two samples using the distance matrix
 	int getDistanceBetween(MitochondrialDnaSample sample1, MitochondrialDnaSample sample2);
 
