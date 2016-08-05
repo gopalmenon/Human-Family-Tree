@@ -18,6 +18,9 @@ FamilyTreeNode::FamilyTreeNode(std::vector<MitochondrialDnaSample> samplesInNode
 	this->samplesInNode = samplesInNode;
 	this->leftChild = std::shared_ptr<FamilyTreeNode>(nullptr);
 	this->rightChild = std::shared_ptr<FamilyTreeNode>(nullptr);
+	this->nodeHeight = 0;
+	this->leftEdgeLength = 0;
+	this->rightEdgeLength = 0;
 }
 
 //Copy constructor
@@ -25,6 +28,9 @@ FamilyTreeNode::FamilyTreeNode (const FamilyTreeNode& other) : mtDnaDistanceMatr
 	this->samplesInNode = other.samplesInNode;
 	this->leftChild = std::shared_ptr<FamilyTreeNode>(nullptr);
 	this->rightChild = std::shared_ptr<FamilyTreeNode>(nullptr);
+	this->nodeHeight = other.nodeHeight;
+	this->leftEdgeLength = other.leftEdgeLength;
+	this->rightEdgeLength = other.rightEdgeLength;
 }
 
 
@@ -74,5 +80,26 @@ FamilyTreeNode FamilyTreeNode::mergeWith(FamilyTreeNode other) {
 	//Specify the child nodes for the merged node
 	mergedNode.setChildNodes(*this, other);
 
+	float distanceFromOther = distanceFrom(other);
+	mergedNode.nodeHeight = distanceFromOther / 2.0;
+	mergedNode.leftEdgeLength = mergedNode.nodeHeight - this->nodeHeight;
+	mergedNode.rightEdgeLength = mergedNode.nodeHeight - other.nodeHeight;
+
 	return mergedNode;
+}
+
+//Print the node contents
+void FamilyTreeNode::printNode() {
+
+}
+
+//Override the equal operator
+bool FamilyTreeNode::operator==(const FamilyTreeNode& other) {
+
+	if (other.leftChild == this->leftChild && other.rightChild == this->rightChild) {
+		return true;
+	} else {
+		return false;
+	}
+
 }

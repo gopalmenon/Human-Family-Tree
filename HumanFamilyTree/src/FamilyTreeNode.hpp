@@ -22,6 +22,7 @@ private:
 	MtDnaDistanceMatrix mtDnaDistanceMatrix;
 	std::shared_ptr<FamilyTreeNode> leftChild;
 	std::shared_ptr<FamilyTreeNode> rightChild;
+	int nodeHeight, leftEdgeLength, rightEdgeLength;
 
 	//Set child nodes
 	void setChildNodes(FamilyTreeNode leftChild, FamilyTreeNode rightChild);
@@ -49,6 +50,12 @@ public:
 	std::shared_ptr<FamilyTreeNode> getRightChild() {
 		return this->rightChild;
 	}
+
+	//Print node contents
+	void printNode();
+
+	//Override the equal operator
+	bool operator==(const FamilyTreeNode& other);
 
 };
 
