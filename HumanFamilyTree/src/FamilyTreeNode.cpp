@@ -8,6 +8,7 @@
 #include "FamilyTreeNode.hpp"
 #include "MtDnaDistanceMatrix.hpp"
 
+#include <iostream>
 #include <map>
 #include <memory>
 #include <utility>
@@ -90,7 +91,7 @@ FamilyTreeNode FamilyTreeNode::mergeWith(FamilyTreeNode other) {
 
 //Print the node contents
 void FamilyTreeNode::printNode() {
-
+	std::cout << "Node height " << this->nodeHeight << ", left edge " << this->leftEdgeLength << ", right edge " << this->rightEdgeLength << std::endl;
 }
 
 //Override the equal operator
