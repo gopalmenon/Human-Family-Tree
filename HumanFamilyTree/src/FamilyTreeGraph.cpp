@@ -8,6 +8,7 @@
 #include "FamilyTreeGraph.hpp"
 
 #include <algorithm>
+#include <iostream>
 #include <queue>
 
 //Order the inter-cluster distances in increasing order
@@ -16,7 +17,7 @@ void orderInterClusterDistances(std::priority_queue<InterClusterDistance, std::v
 	int numberOfInitialClusters = graphNodes.size();
 	for (int clusterCounter1 = 0; clusterCounter1 < numberOfInitialClusters - 1; ++clusterCounter1) {
 		for (int clusterCounter2 = clusterCounter1 + 1; clusterCounter2 < numberOfInitialClusters; ++clusterCounter2) {
-			InterClusterDistance interClusterDistance(graphNodes.at(clusterCounter1), graphNodes.at(clusterCounter1), graphNodes.at(clusterCounter1).distanceFrom(graphNodes.at(clusterCounter2)));
+			InterClusterDistance interClusterDistance(graphNodes.at(clusterCounter1), graphNodes.at(clusterCounter2), graphNodes.at(clusterCounter1).distanceFrom(graphNodes.at(clusterCounter2)));
 			orderedInterClusterDistances.push(interClusterDistance);
 		}
 	}
@@ -35,15 +36,36 @@ void FamilyTreeGraph::formInitialClusters() {
 }
 
 //Remove merged clusters from list of nodes not yet merged
-void FamilyTreeGraph::removeMergedClusters(const FamilyTreeNode& nodeToBeMerged1, const FamilyTreeNode& nodeToBeMerged2) {
+void FamilyTreeGraph::removeMergedClusters(FamilyTreeNode& nodeToBeMerged1, FamilyTreeNode& nodeToBeMerged2) {
 
 	auto nodeIterator = std::find(this->nodesNotMergedYet.begin(), this->nodesNotMergedYet.end(), nodeToBeMerged1);
 	if (nodeIterator != this->nodesNotMergedYet.end()) {
+		std::cout << "Remove node ";
+		nodeToBeMerged1.printNode();
+		for (auto nodeIterator = this->nodesNotMergedYet.begin(); nodeIterator != this->nodesNotMergedYet.end(); ++nodeIterator) {
+
+			std::cout << "Remaining node before removing first ";
+			nodeIterator->printNode();
+			std::cout << std::endl;
+		}
 		this->nodesNotMergedYet.erase(nodeIterator);
-	} else {
-		nodeIterator = std::find(this->nodesNotMergedYet.begin(), this->nodesNotMergedYet.end(), nodeToBeMerged2);
-		if (nodeIterator != this->nodesNotMergedYet.end()) {
-			this->nodesNotMergedYet.erase(nodeIterator);
+		for (auto nodeIterator = this->nodesNotMergedYet.begin(); nodeIterator != this->nodesNotMergedYet.end(); ++nodeIterator) {
+
+			std::cout << "Remaining node after removing first ";
+			nodeIterator->printNode();
+			std::cout << std::endl;
+		}
+	}
+	nodeIterator = std::find(this->nodesNotMergedYet.begin(), this->nodesNotMergedYet.end(), nodeToBeMerged2);
+	if (nodeIterator != this->nodesNotMergedYet.end()) {
+		std::cout << "Remove node " << std::endl;
+		nodeToBeMerged2.printNode();
+		this->nodesNotMergedYet.erase(nodeIterator);
+		for (auto nodeIterator = this->nodesNotMergedYet.begin(); nodeIterator != this->nodesNotMergedYet.end(); ++nodeIterator) {
+
+			std::cout << "Remaining node after removing second ";
+			nodeIterator->printNode();
+			std::cout << std::endl;
 		}
 	}
 
@@ -53,11 +75,21 @@ void FamilyTreeGraph::storeNewNodeDistances(FamilyTreeNode& mergedNode, std::pri
 
 	for (auto nodeIterator = this->nodesNotMergedYet.begin(); nodeIterator != this->nodesNotMergedYet.end(); ++nodeIterator) {
 
+		std::cout << "Remaining node ";
+		nodeIterator->printNode();
+		std::cout << std::endl;
+	}
+
+	for (auto nodeIterator = this->nodesNotMergedYet.begin(); nodeIterator != this->nodesNotMergedYet.end(); ++nodeIterator) {
+
 		InterClusterDistance interClusterDistance(mergedNode, *nodeIterator, mergedNode.distanceFrom(*nodeIterator));
+		std::cout << "Storing distance between new node and ";
+		interClusterDistance.cluster2.printNode();
+		std::cout << " " << std::to_string(interClusterDistance.distance);
+		std::cout << std::endl;
 		orderedInterClusterDistances.push(interClusterDistance);
 
 	}
-
 
 }
 
@@ -81,11 +113,30 @@ void FamilyTreeGraph::runHierarchicalClustering() {
 		FamilyTreeNode nodeToBeMerged1 = interClusterDistance.cluster1;
 		FamilyTreeNode nodeToBeMerged2 = interClusterDistance.cluster2;
 
+		std::cout << "Candidate distance " << std::to_string(interClusterDistance.distance);
+		std::cout << " between ";
+		nodeToBeMerged1.printNode();
+		std::cout << " and ";
+		nodeToBeMerged2.printNode();
+		std::cout << std::endl;
+
+		std::cout << "Unmerged nodes are" << std::endl;
+		for (FamilyTreeNode testNode : this->nodesNotMergedYet) {
+			testNode.printNode();
+		}
+
+
 		//Merge the nodes if they exist in the list of nodes not yet merged
 		if (std::find(this->nodesNotMergedYet.begin(), this->nodesNotMergedYet.end(), nodeToBeMerged1) != this->nodesNotMergedYet.end() &&
 			std::find(this->nodesNotMergedYet.begin(), this->nodesNotMergedYet.end(), nodeToBeMerged2) != this->nodesNotMergedYet.end()) {
 
 			//Merge the two closest clusters
+			std::cout << "Merge node " << std::endl;
+			nodeToBeMerged1.printNode();
+			std::cout << " and " << std::endl;
+			nodeToBeMerged2.printNode();
+			std::cout << std::endl;
+
 			FamilyTreeNode mergedNode = nodeToBeMerged1.mergeWith(nodeToBeMerged2);
 
 			//Remove merged clusters from total population
@@ -93,6 +144,9 @@ void FamilyTreeGraph::runHierarchicalClustering() {
 
 			//Store distances to nodes not yet merged
 			storeNewNodeDistances(mergedNode, orderedInterClusterDistances);
+
+			//Store new node into list of nodes to be merged
+			this->nodesNotMergedYet.push_back(mergedNode);
 
 			//Store the merged node
 			this->graphNodes.push_back(mergedNode);
@@ -118,6 +172,7 @@ void FamilyTreeGraph::printChildrenAndThenSelf(std::shared_ptr<FamilyTreeNode> n
 	} else {
 		printChildrenAndThenSelf(node->getLeftChild());
 		printChildrenAndThenSelf(node->getRightChild());
+		node->printNode();
 	}
 
 }
@@ -125,6 +180,7 @@ void FamilyTreeGraph::printChildrenAndThenSelf(std::shared_ptr<FamilyTreeNode> n
 //Print the graph contents
 void FamilyTreeGraph::printGraph() {
 
+	std::cout << "Printing Graph" << std::endl;
 	FamilyTreeNode rootNode = this->graphNodes.back();
 	printChildrenAndThenSelf(std::make_shared<FamilyTreeNode>(rootNode));
 

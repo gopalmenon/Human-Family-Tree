@@ -24,9 +24,9 @@ public:
 	int getDistanceFrom(MitochondrialDnaSample other);
 	std::string getDnaSequence();
 	std::string getSampleLabel();
-	int getSampleNumber();
-};
+	int getSampleNumber() const;
 
+};
 
 
 #endif /* MITOCHONDRIALDNASAMPLE_HPP_ */

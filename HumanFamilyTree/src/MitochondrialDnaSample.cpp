@@ -26,7 +26,7 @@ std::string MitochondrialDnaSample::getSampleLabel() {
 }
 
 //Return the sample number
-int MitochondrialDnaSample::getSampleNumber() {
+int MitochondrialDnaSample::getSampleNumber() const {
 	return this->sampleNumber;
 }
 
@@ -37,3 +37,4 @@ int MitochondrialDnaSample::getDistanceFrom(MitochondrialDnaSample other) {
 	return editDistanceFinder.getAlignmentScore();
 
 }
+

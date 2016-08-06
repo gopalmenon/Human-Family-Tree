@@ -26,7 +26,7 @@ struct InterClusterDistance {
 
 struct CompareDistance {
     bool operator()(InterClusterDistance const & interClusterDistance1, InterClusterDistance const & interClusterDistance2) {
-        return interClusterDistance1.distance < interClusterDistance2.distance;
+        return interClusterDistance1.distance > interClusterDistance2.distance;
     }
 };
 
@@ -46,7 +46,7 @@ private:
 	void runHierarchicalClustering();
 
 	//Remove merged clusters from total population
-	void removeMergedClusters(const FamilyTreeNode& nodeToBeMerged1, const FamilyTreeNode& nodeToBeMerged2);
+	void removeMergedClusters(FamilyTreeNode& nodeToBeMerged1, FamilyTreeNode& nodeToBeMerged2);
 
 	//Store merged node distances
 	void storeNewNodeDistances(FamilyTreeNode& mergedNode, std::priority_queue<InterClusterDistance, std::vector<InterClusterDistance>, CompareDistance>& orderedInterClusterDistances);

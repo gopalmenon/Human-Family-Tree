@@ -27,6 +27,12 @@ private:
 	//Set child nodes
 	void setChildNodes(FamilyTreeNode leftChild, FamilyTreeNode rightChild);
 
+	const bool isLeafNode() const;
+
+	const int getLeafSampleNumber() const;
+
+	const bool isTwoSamplesSame(std::vector<MitochondrialDnaSample> sample1, std::vector<MitochondrialDnaSample> sample2) const;
+
 public:
 
 	//Constructor
@@ -55,7 +61,7 @@ public:
 	void printNode();
 
 	//Override the equal operator
-	bool operator==(const FamilyTreeNode& other);
+	bool const operator==(const FamilyTreeNode& other);
 
 };
 

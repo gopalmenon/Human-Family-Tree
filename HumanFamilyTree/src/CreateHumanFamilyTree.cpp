@@ -5,6 +5,7 @@
  *      Author: gopalmenon
  */
 
+#include "FamilyTreeGraph.hpp"
 #include "FileOperations.hpp"
 #include "MitochondrialDnaSample.hpp"
 #include "MtDnaDistanceMatrix.hpp"
@@ -23,5 +24,8 @@ int main() {
 
 		}
 	}
+
+	FamilyTreeGraph familyTreeGraph(mtDnaSamples, mtDnaDistanceMatrix);
+	familyTreeGraph.printGraph();
 }
 

@@ -11,6 +11,7 @@
 #include <iostream>
 #include <map>
 #include <memory>
+#include <string>
 #include <utility>
 #include <vector>
 
@@ -49,7 +50,7 @@ float FamilyTreeNode::distanceFrom(FamilyTreeNode other) {
 	}
 
 	//Divide by the product of the number of nodes in each cluster
-	distanceFromOtherNode /= this->samplesInNode.size() * other.samplesInNode.size();
+	distanceFromOtherNode /= (this->samplesInNode.size() * other.samplesInNode.size());
 
 	return distanceFromOtherNode;
 }
@@ -91,16 +92,41 @@ FamilyTreeNode FamilyTreeNode::mergeWith(FamilyTreeNode other) {
 
 //Print the node contents
 void FamilyTreeNode::printNode() {
+	std::cout << (this->samplesInNode.size() == 1 ? this->samplesInNode.at(0).getSampleLabel() : std::to_string(this->samplesInNode.size())) << " contents. ";
 	std::cout << "Node height " << this->nodeHeight << ", left edge " << this->leftEdgeLength << ", right edge " << this->rightEdgeLength << std::endl;
 }
 
-//Override the equal operator
-bool FamilyTreeNode::operator==(const FamilyTreeNode& other) {
+const bool FamilyTreeNode::isLeafNode() const {
 
-	if (other.leftChild == this->leftChild && other.rightChild == this->rightChild) {
+	return this->samplesInNode.size() == 1;
+
+}
+const int FamilyTreeNode::getLeafSampleNumber() const {
+
+	return this->samplesInNode.at(0).getSampleNumber();
+
+}
+
+const bool FamilyTreeNode::isTwoSamplesSame(std::vector<MitochondrialDnaSample> sample1, std::vector<MitochondrialDnaSample> sample2) const {
+
+	if (sample1.size() == sample2.size()) {
+		for (auto sample1Iterator = sample1.begin(), sample2Iterator = sample2.begin(); sample1Iterator != sample1.end(); ++sample1Iterator, ++sample2Iterator) {
+			if (sample1Iterator->getSampleNumber() != sample2Iterator->getSampleNumber()) {
+				return false;
+			}
+		}
+
 		return true;
 	} else {
 		return false;
 	}
+
+}
+
+
+//Override the equal operator
+bool const FamilyTreeNode::operator==(const FamilyTreeNode& other) {
+
+	return isTwoSamplesSame(this->samplesInNode, other.samplesInNode);
 
 }
