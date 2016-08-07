@@ -1,0 +1,142 @@
+Aboriginal Malay (Semelai).txt
+Aboriginal Malay (Temuan).txt
+Adygei.txt
+African American.txt
+African.txt
+Algeria.txt
+Asian American.txt
+Australian Aborigine.txt
+Australian.txt
+Bamileke.txt
+Berber.txt
+Biaka Pygmy.txt
+Bougainville.txt
+Cambodian.txt
+Canary islands.txt
+Central Italy.txt
+Chinese (Han).txt
+Chinese (Tujia).txt
+Chinese.txt
+Chukchi.txt
+Cook Islander.txt
+Crimean Tatar.txt
+Dutch.txt
+Effik.txt
+Egypt (Copt).txt
+Egypt (Siwa).txt
+English.txt
+Espiritu Santo.txt
+Ethiopia (Jew).txt
+Ethiopia.txt
+Ethipia (Oromo).txt
+European American.txt
+European Cherkes.txt
+Evenki.txt
+Ewondo.txt
+Filipino.txt
+Finland.txt
+French.txt
+Fulbe.txt
+Georgian.txt
+German.txt
+Great Andamanese.txt
+Greece Crete.txt
+Greece Lemnos.txt
+Guarani.txt
+Hausa.txt
+Ibo.txt
+Indian.txt
+Iraq Jew.txt
+Iraq.txt
+Iraqi Israeli.txt
+Israel Bedouin.txt
+Israel Druze.txt
+Italian.txt
+Italy Sardinia.txt
+Italy Sicily.txt
+Japanese.txt
+Jordan.txt
+Kannada.txt
+Kapingamarangi Atoll.txt
+Ket.txt
+Khirgiz.txt
+Khwe.txt
+Kikuyu.txt
+Koraga.txt
+Korean.txt
+Koryak.txt
+Lebanon.txt
+Lisongo.txt
+Maewo.txt
+Majuro Atoll.txt
+Malay.txt
+Mandenka.txt
+Mansi.txt
+Mauritania.txt
+Mbenzele Pygmy.txt
+Mbuti Pygmy.txt
+Melayu.txt
+Mixteca (Baja).txt
+Mkamba.txt
+Morocco (Berber Asni).txt
+Morocco (Berber Bouhria).txt
+Morocco (Berber).txt
+Morocco (Muslim).txt
+Morocco.txt
+Mullukurun.txt
+Nasioi.txt
+Navajo.txt
+Negidaltsy.txt
+New Britain Marabu.txt
+New Britain Uasilau.txt
+New Ireland.txt
+Nganasan.txt
+Nicobarese.txt
+Nigeria (Songhai).txt
+Nigeria.txt
+North American.txt
+Onge.txt
+PNG Coast.txt
+PNG Highlands.txt
+PNG Trobriand Islands.txt
+Pakistan.txt
+Palestine.txt
+Piman.txt
+Saami European.txt
+Samoan.txt
+San.txt
+Saudi Arabia.txt
+Semang (Batek).txt
+Semang (Jahai).txt
+Senegal (Wolof).txt
+Siberian Inuit.txt
+Somalia.txt
+South African.txt
+South American.txt
+Southern Italy.txt
+Spain Andalusia.txt
+Spain Galicia.txt
+Spain Leon.txt
+Spain Maragato.txt
+Spain.txt
+Syria.txt
+Taiwan Aborigine.txt
+Thai.txt
+Tofalar-Negidal.txt
+Tofalar.txt
+Tongan.txt
+Tubalar.txt
+Tunisia.txt
+Tuvan.txt
+Tuvli.txt
+Udegei.txt
+Ugandan.txt
+Ulchi Nanaj-Negidal.txt
+Ulchi.txt
+Uzbek.txt
+Vanuatu.txt
+Volga Ural.txt
+Warao.txt
+Yakut.txt
+Yemen.txt
+Yoruba.txt
