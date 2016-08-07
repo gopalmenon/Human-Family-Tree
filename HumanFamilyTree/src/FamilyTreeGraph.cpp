@@ -8,6 +8,7 @@
 #include "FamilyTreeGraph.hpp"
 
 #include <algorithm>
+#include <fstream>
 #include <iostream>
 #include <queue>
 
@@ -24,12 +25,27 @@ void FamilyTreeGraph::orderInterClusterDistances() {
 
 }
 
+//Take out parentheses from string
+std::string FamilyTreeGraph::stripParantheses(std::string text) {
+
+	int index = 0;
+	while (index < text.size()) {
+		if (text[index] == '(' || text[index] == ')') {
+			text.erase(index, 1);
+		} else {
+			index++;
+		}
+	}
+	return text;
+}
+
 //Form initial clusters made up of mtDNA samples
 void FamilyTreeGraph::formInitialClusters() {
 	for (MitochondrialDnaSample mitochondrialDnaSample : this->totalPopulation) {
 		std::vector<MitochondrialDnaSample> samplesInCluster;
 		samplesInCluster.push_back(mitochondrialDnaSample);
 		FamilyTreeNode familyTreeNode(samplesInCluster, this->mtDnaDistanceMatrix);
+		familyTreeNode.setNewickFormatNodeScript(stripParantheses(mitochondrialDnaSample.getSampleLabel()));
 		this->graphNodes.push_back(familyTreeNode);
 		this->nodesNotMergedYet.push_back(familyTreeNode);
 	}
@@ -112,6 +128,17 @@ FamilyTreeGraph::FamilyTreeGraph(std::vector<MitochondrialDnaSample> totalPopula
 	runHierarchicalClustering();
 }
 
+
+void FamilyTreeGraph::createTreeScriptFile(std::string script) {
+
+	std::ofstream scriptFile;
+	scriptFile.open (PHYLOGENETIC_TREE_SCRIPT_TEXT_FILE);
+	scriptFile << script;
+	scriptFile.flush();
+	scriptFile.close();
+
+}
+
 //Print the graph contents
 void FamilyTreeGraph::printGraph() {
 
@@ -127,5 +154,6 @@ void FamilyTreeGraph::printGraph() {
 
 	}
 
-}
+	createTreeScriptFile(this->graphNodes.at(numberOfClusters - 1).getNewickFormatNodeScript());
 
+}

@@ -4,20 +4,19 @@
  *  Created on: Jul 27, 2016
  *      Author: gopalmenon
  */
+#ifndef FILEOPERATIONS_HPP_
+#define FILEOPERATIONS_HPP_
 
 #include "MitochondrialDnaSample.hpp"
 
 #include <algorithm>
 #include <cctype>
-#include <fstream>
 #include <functional>
 #include <iostream>
 #include <locale>
+#include <fstream>
 #include <string>
 #include <vector>
-
-#ifndef FILEOPERATIONS_HPP_
-#define FILEOPERATIONS_HPP_
 
 static std::string MTDNA_FILE_LISTING_TEXT_FILE = "../fileListing.txt";
 static std::string DATA_FILES_DIRECTORY = "../Data/";

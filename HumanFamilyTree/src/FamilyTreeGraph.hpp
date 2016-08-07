@@ -35,6 +35,8 @@ class FamilyTreeGraph {
 
 private:
 
+	const std::string PHYLOGENETIC_TREE_SCRIPT_TEXT_FILE = "../treeScript.txt";
+
 	std::vector<MitochondrialDnaSample> totalPopulation;
 	std::vector<FamilyTreeNode> graphNodes;
 	std::vector<FamilyTreeNode> nodesNotMergedYet;
@@ -44,6 +46,9 @@ private:
 
 	//Form initial clusters made up of mtDNA samples
 	void formInitialClusters();
+
+	//Take out parentheses from string
+	std::string stripParantheses(std::string text);
 
 	//Run Hierarchical Clustering using UPGMA (Unweighted Pair Group Method with Arithmetic Mean)
 	void runHierarchicalClustering();
@@ -56,6 +61,8 @@ private:
 
 	//Order the inter-cluster distances in increasing order
 	void orderInterClusterDistances();
+
+	void createTreeScriptFile(std::string script);
 
 public:
 

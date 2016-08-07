@@ -23,6 +23,7 @@ private:
 	std::shared_ptr<FamilyTreeNode> leftChild;
 	std::shared_ptr<FamilyTreeNode> rightChild;
 	float nodeHeight, leftEdgeLength, rightEdgeLength;
+	std::string newickFormatNodeScript;
 
 	//Set child nodes
 	void setChildNodes(FamilyTreeNode& leftChild, FamilyTreeNode& rightChild);
@@ -72,6 +73,14 @@ public:
 
 	//Print node contents
 	void printNode();
+
+	void setNewickFormatNodeScript(std::string script) {
+		this->newickFormatNodeScript = script;
+	}
+
+	std::string getNewickFormatNodeScript() {
+		return this->newickFormatNodeScript;
+	}
 
 	//Override the equal operator
 	bool const operator==(const FamilyTreeNode& other);

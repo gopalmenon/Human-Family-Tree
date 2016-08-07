@@ -32,7 +32,8 @@ FamilyTreeNode::FamilyTreeNode(std::vector<MitochondrialDnaSample> samplesInNode
 	this->rightChild = std::make_shared<FamilyTreeNode>(rightChild);
 	this->nodeHeight = 0.0;
 	this->leftEdgeLength = 0.0;
-	this->rightEdgeLength = 0.0;}
+	this->rightEdgeLength = 0.0;
+}
 
 //Copy constructor
 FamilyTreeNode::FamilyTreeNode (const FamilyTreeNode& other) : mtDnaDistanceMatrix(other.mtDnaDistanceMatrix) {
@@ -42,6 +43,7 @@ FamilyTreeNode::FamilyTreeNode (const FamilyTreeNode& other) : mtDnaDistanceMatr
 	this->nodeHeight = other.nodeHeight;
 	this->leftEdgeLength = other.leftEdgeLength;
 	this->rightEdgeLength = other.rightEdgeLength;
+	this->newickFormatNodeScript = other.newickFormatNodeScript;
 }
 
 
@@ -93,6 +95,7 @@ FamilyTreeNode FamilyTreeNode::mergeWith(FamilyTreeNode& other) {
 	mergedNode.nodeHeight = distanceFromOther / 2.0;
 	mergedNode.leftEdgeLength = mergedNode.nodeHeight - this->nodeHeight;
 	mergedNode.rightEdgeLength = mergedNode.nodeHeight - other.nodeHeight;
+	mergedNode.setNewickFormatNodeScript("(" + this->getNewickFormatNodeScript() + ":" + std::to_string(mergedNode.leftEdgeLength) + "," + other.getNewickFormatNodeScript() + ":" + std::to_string(mergedNode.rightEdgeLength) + ")");
 
 	return mergedNode;
 }
