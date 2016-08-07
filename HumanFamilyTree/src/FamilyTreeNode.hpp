@@ -20,13 +20,8 @@ private:
 
 	std::vector<MitochondrialDnaSample> samplesInNode;
 	MtDnaDistanceMatrix mtDnaDistanceMatrix;
-	std::shared_ptr<FamilyTreeNode> leftChild;
-	std::shared_ptr<FamilyTreeNode> rightChild;
 	float nodeHeight, leftEdgeLength, rightEdgeLength;
 	std::string newickFormatNodeScript;
-
-	//Set child nodes
-	void setChildNodes(FamilyTreeNode& leftChild, FamilyTreeNode& rightChild);
 
 	const int getLeafSampleNumber() const;
 
@@ -49,16 +44,6 @@ public:
 	//Merge the nodes by adding the mtDNA samples in the other to the current one
 	FamilyTreeNode mergeWith(FamilyTreeNode& other);
 
-	//Return left child
-	std::shared_ptr<FamilyTreeNode> getLeftChild() {
-		return this->leftChild;
-	}
-
-	//Return right child
-	std::shared_ptr<FamilyTreeNode> getRightChild() {
-		return this->rightChild;
-	}
-
 	const bool isLeafNode() const;
 
 	std::string getLeafSampleLabel();
@@ -70,9 +55,6 @@ public:
 	float getLeftEdgeLength();
 
 	float getRightEdgeLength();
-
-	//Print node contents
-	void printNode();
 
 	void setNewickFormatNodeScript(std::string script) {
 		this->newickFormatNodeScript = script;

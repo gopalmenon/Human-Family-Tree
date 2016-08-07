@@ -91,11 +91,8 @@ void FamilyTreeGraph::runHierarchicalClustering() {
 		//Get the two closest clusters
 		InterClusterDistance interClusterDistance = this->orderedInterClusterDistances.top();
 		this->orderedInterClusterDistances.pop();
-		this->removedNodes.push_back(interClusterDistance.cluster1);
-		this->removedNodes.push_back(interClusterDistance.cluster2);
-		long lastRemovedElementIndex = this->removedNodes.size() - 1;
-		FamilyTreeNode& nodeToBeMerged1 = this->removedNodes.at(lastRemovedElementIndex);
-		FamilyTreeNode& nodeToBeMerged2 = this->removedNodes.at(lastRemovedElementIndex - 1);
+		FamilyTreeNode& nodeToBeMerged1 = interClusterDistance.cluster1;
+		FamilyTreeNode& nodeToBeMerged2 = interClusterDistance.cluster2;
 
 		//Merge the nodes if they exist in the list of nodes not yet merged
 		if (std::find(this->nodesNotMergedYet.begin(), this->nodesNotMergedYet.end(), nodeToBeMerged1) != this->nodesNotMergedYet.end() &&
@@ -142,18 +139,6 @@ void FamilyTreeGraph::createTreeScriptFile(std::string script) {
 //Print the graph contents
 void FamilyTreeGraph::printGraph() {
 
-	long numberOfClusters = this->graphNodes.size();
-	for (int clusterIndex = numberOfClusters - 1; clusterIndex >= 0; --clusterIndex) {
-		if (this->graphNodes.at(clusterIndex).isLeafNode()) {
-			std::cout << "Node is " << this->graphNodes.at(clusterIndex).getLeafSampleLabel() << std::endl;
-		} else {
-			std::cout << "Node height " << std::to_string(this->graphNodes.at(clusterIndex).getNodeHeight()) << ", left edge length " << std::to_string(this->graphNodes.at(clusterIndex).getLeftEdgeLength()) << ", right edge length " << std::to_string(this->graphNodes.at(clusterIndex).getRightEdgeLength()) << std::endl;
-			std::cout << "Node contains " << this->graphNodes.at(clusterIndex).getNodeSampleLabels() << std::endl;
-
-		}
-
-	}
-
-	createTreeScriptFile(this->graphNodes.at(numberOfClusters - 1).getNewickFormatNodeScript());
+	createTreeScriptFile(this->graphNodes.at(this->graphNodes.size() - 1).getNewickFormatNodeScript());
 
 }

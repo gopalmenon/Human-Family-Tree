@@ -41,7 +41,6 @@ private:
 	std::vector<FamilyTreeNode> graphNodes;
 	std::vector<FamilyTreeNode> nodesNotMergedYet;
 	std::priority_queue<InterClusterDistance, std::vector<InterClusterDistance>, CompareDistance> orderedInterClusterDistances;
-	std::vector<FamilyTreeNode> removedNodes;
 	MtDnaDistanceMatrix mtDnaDistanceMatrix;
 
 	//Form initial clusters made up of mtDNA samples
