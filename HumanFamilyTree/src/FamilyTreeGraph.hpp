@@ -22,6 +22,7 @@ struct InterClusterDistance {
 	float distance;
 
 	InterClusterDistance(FamilyTreeNode cluster1, FamilyTreeNode cluster2, float distance) : cluster1(cluster1), cluster2(cluster2), distance(distance) {};
+
 };
 
 struct CompareDistance {
@@ -37,6 +38,8 @@ private:
 	std::vector<MitochondrialDnaSample> totalPopulation;
 	std::vector<FamilyTreeNode> graphNodes;
 	std::vector<FamilyTreeNode> nodesNotMergedYet;
+	std::priority_queue<InterClusterDistance, std::vector<InterClusterDistance>, CompareDistance> orderedInterClusterDistances;
+	std::vector<FamilyTreeNode> removedNodes;
 	MtDnaDistanceMatrix mtDnaDistanceMatrix;
 
 	//Form initial clusters made up of mtDNA samples
@@ -49,9 +52,10 @@ private:
 	void removeMergedClusters(FamilyTreeNode& nodeToBeMerged1, FamilyTreeNode& nodeToBeMerged2);
 
 	//Store merged node distances
-	void storeNewNodeDistances(FamilyTreeNode& mergedNode, std::priority_queue<InterClusterDistance, std::vector<InterClusterDistance>, CompareDistance>& orderedInterClusterDistances);
+	void storeNewNodeDistances(FamilyTreeNode& mergedNode);
 
-	void printChildrenAndThenSelf(std::shared_ptr<FamilyTreeNode> node);
+	//Order the inter-cluster distances in increasing order
+	void orderInterClusterDistances();
 
 public:
 

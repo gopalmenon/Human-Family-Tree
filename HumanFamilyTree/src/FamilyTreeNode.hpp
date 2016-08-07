@@ -22,12 +22,10 @@ private:
 	MtDnaDistanceMatrix mtDnaDistanceMatrix;
 	std::shared_ptr<FamilyTreeNode> leftChild;
 	std::shared_ptr<FamilyTreeNode> rightChild;
-	int nodeHeight, leftEdgeLength, rightEdgeLength;
+	float nodeHeight, leftEdgeLength, rightEdgeLength;
 
 	//Set child nodes
-	void setChildNodes(FamilyTreeNode leftChild, FamilyTreeNode rightChild);
-
-	const bool isLeafNode() const;
+	void setChildNodes(FamilyTreeNode& leftChild, FamilyTreeNode& rightChild);
 
 	const int getLeafSampleNumber() const;
 
@@ -38,6 +36,9 @@ public:
 	//Constructor
 	FamilyTreeNode(std::vector<MitochondrialDnaSample> samplesInNode, MtDnaDistanceMatrix mtDnaDistanceMatrix);
 
+	//Constructor
+	FamilyTreeNode(std::vector<MitochondrialDnaSample> samplesInNode, MtDnaDistanceMatrix mtDnaDistanceMatrix, FamilyTreeNode& leftChild, FamilyTreeNode& rightChild);
+
 	//Copy constructor
 	FamilyTreeNode (const FamilyTreeNode& other);
 
@@ -45,7 +46,7 @@ public:
 	float distanceFrom(FamilyTreeNode other);
 
 	//Merge the nodes by adding the mtDNA samples in the other to the current one
-	FamilyTreeNode mergeWith(FamilyTreeNode other);
+	FamilyTreeNode mergeWith(FamilyTreeNode& other);
 
 	//Return left child
 	std::shared_ptr<FamilyTreeNode> getLeftChild() {
@@ -56,6 +57,18 @@ public:
 	std::shared_ptr<FamilyTreeNode> getRightChild() {
 		return this->rightChild;
 	}
+
+	const bool isLeafNode() const;
+
+	std::string getLeafSampleLabel();
+
+	std::string getNodeSampleLabels();
+
+	float getNodeHeight();
+
+	float getLeftEdgeLength();
+
+	float getRightEdgeLength();
 
 	//Print node contents
 	void printNode();

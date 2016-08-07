@@ -12,13 +12,13 @@
 #include <queue>
 
 //Order the inter-cluster distances in increasing order
-void orderInterClusterDistances(std::priority_queue<InterClusterDistance, std::vector<InterClusterDistance>, CompareDistance>& orderedInterClusterDistances, std::vector<FamilyTreeNode> graphNodes) {
+void FamilyTreeGraph::orderInterClusterDistances() {
 
-	int numberOfInitialClusters = graphNodes.size();
+	int numberOfInitialClusters = this->graphNodes.size();
 	for (int clusterCounter1 = 0; clusterCounter1 < numberOfInitialClusters - 1; ++clusterCounter1) {
 		for (int clusterCounter2 = clusterCounter1 + 1; clusterCounter2 < numberOfInitialClusters; ++clusterCounter2) {
-			InterClusterDistance interClusterDistance(graphNodes.at(clusterCounter1), graphNodes.at(clusterCounter2), graphNodes.at(clusterCounter1).distanceFrom(graphNodes.at(clusterCounter2)));
-			orderedInterClusterDistances.push(interClusterDistance);
+			InterClusterDistance interClusterDistance(this->graphNodes.at(clusterCounter1), this->graphNodes.at(clusterCounter2), this->graphNodes.at(clusterCounter1).distanceFrom(this->graphNodes.at(clusterCounter2)));
+			this->orderedInterClusterDistances.push(interClusterDistance);
 		}
 	}
 
@@ -40,54 +40,21 @@ void FamilyTreeGraph::removeMergedClusters(FamilyTreeNode& nodeToBeMerged1, Fami
 
 	auto nodeIterator = std::find(this->nodesNotMergedYet.begin(), this->nodesNotMergedYet.end(), nodeToBeMerged1);
 	if (nodeIterator != this->nodesNotMergedYet.end()) {
-		std::cout << "Remove node ";
-		nodeToBeMerged1.printNode();
-		for (auto nodeIterator = this->nodesNotMergedYet.begin(); nodeIterator != this->nodesNotMergedYet.end(); ++nodeIterator) {
-
-			std::cout << "Remaining node before removing first ";
-			nodeIterator->printNode();
-			std::cout << std::endl;
-		}
 		this->nodesNotMergedYet.erase(nodeIterator);
-		for (auto nodeIterator = this->nodesNotMergedYet.begin(); nodeIterator != this->nodesNotMergedYet.end(); ++nodeIterator) {
-
-			std::cout << "Remaining node after removing first ";
-			nodeIterator->printNode();
-			std::cout << std::endl;
-		}
 	}
 	nodeIterator = std::find(this->nodesNotMergedYet.begin(), this->nodesNotMergedYet.end(), nodeToBeMerged2);
 	if (nodeIterator != this->nodesNotMergedYet.end()) {
-		std::cout << "Remove node " << std::endl;
-		nodeToBeMerged2.printNode();
 		this->nodesNotMergedYet.erase(nodeIterator);
-		for (auto nodeIterator = this->nodesNotMergedYet.begin(); nodeIterator != this->nodesNotMergedYet.end(); ++nodeIterator) {
-
-			std::cout << "Remaining node after removing second ";
-			nodeIterator->printNode();
-			std::cout << std::endl;
-		}
 	}
 
 }
 
-void FamilyTreeGraph::storeNewNodeDistances(FamilyTreeNode& mergedNode, std::priority_queue<InterClusterDistance, std::vector<InterClusterDistance>, CompareDistance>& orderedInterClusterDistances) {
-
-	for (auto nodeIterator = this->nodesNotMergedYet.begin(); nodeIterator != this->nodesNotMergedYet.end(); ++nodeIterator) {
-
-		std::cout << "Remaining node ";
-		nodeIterator->printNode();
-		std::cout << std::endl;
-	}
+void FamilyTreeGraph::storeNewNodeDistances(FamilyTreeNode& mergedNode) {
 
 	for (auto nodeIterator = this->nodesNotMergedYet.begin(); nodeIterator != this->nodesNotMergedYet.end(); ++nodeIterator) {
 
 		InterClusterDistance interClusterDistance(mergedNode, *nodeIterator, mergedNode.distanceFrom(*nodeIterator));
-		std::cout << "Storing distance between new node and ";
-		interClusterDistance.cluster2.printNode();
-		std::cout << " " << std::to_string(interClusterDistance.distance);
-		std::cout << std::endl;
-		orderedInterClusterDistances.push(interClusterDistance);
+		this->orderedInterClusterDistances.push(interClusterDistance);
 
 	}
 
@@ -96,54 +63,36 @@ void FamilyTreeGraph::storeNewNodeDistances(FamilyTreeNode& mergedNode, std::pri
 //Run Hierarchical Clustering using UPGMA (Unweighted Pair Group Method with Arithmetic Mean)
 void FamilyTreeGraph::runHierarchicalClustering() {
 
-	std::priority_queue<InterClusterDistance, std::vector<InterClusterDistance>, CompareDistance> orderedInterClusterDistances;
-
 	//Form initial clusters with each mtDNA sample being a node
 	formInitialClusters();
 
 	//Save the inter-node distances in a priority queue ordered by inter-node distance
-	orderInterClusterDistances(orderedInterClusterDistances, this->graphNodes);
+	orderInterClusterDistances();
 
 	//Run clustering by merging the closest nodes. Repeat while there are still more clusters to merge
-	while(!orderedInterClusterDistances.empty()) {
+	while(!this->orderedInterClusterDistances.empty()) {
 
 		//Get the two closest clusters
-		InterClusterDistance interClusterDistance = orderedInterClusterDistances.top();
-		orderedInterClusterDistances.pop();
-		FamilyTreeNode nodeToBeMerged1 = interClusterDistance.cluster1;
-		FamilyTreeNode nodeToBeMerged2 = interClusterDistance.cluster2;
-
-		std::cout << "Candidate distance " << std::to_string(interClusterDistance.distance);
-		std::cout << " between ";
-		nodeToBeMerged1.printNode();
-		std::cout << " and ";
-		nodeToBeMerged2.printNode();
-		std::cout << std::endl;
-
-		std::cout << "Unmerged nodes are" << std::endl;
-		for (FamilyTreeNode testNode : this->nodesNotMergedYet) {
-			testNode.printNode();
-		}
-
+		InterClusterDistance interClusterDistance = this->orderedInterClusterDistances.top();
+		this->orderedInterClusterDistances.pop();
+		this->removedNodes.push_back(interClusterDistance.cluster1);
+		this->removedNodes.push_back(interClusterDistance.cluster2);
+		long lastRemovedElementIndex = this->removedNodes.size() - 1;
+		FamilyTreeNode& nodeToBeMerged1 = this->removedNodes.at(lastRemovedElementIndex);
+		FamilyTreeNode& nodeToBeMerged2 = this->removedNodes.at(lastRemovedElementIndex - 1);
 
 		//Merge the nodes if they exist in the list of nodes not yet merged
 		if (std::find(this->nodesNotMergedYet.begin(), this->nodesNotMergedYet.end(), nodeToBeMerged1) != this->nodesNotMergedYet.end() &&
 			std::find(this->nodesNotMergedYet.begin(), this->nodesNotMergedYet.end(), nodeToBeMerged2) != this->nodesNotMergedYet.end()) {
 
 			//Merge the two closest clusters
-			std::cout << "Merge node " << std::endl;
-			nodeToBeMerged1.printNode();
-			std::cout << " and " << std::endl;
-			nodeToBeMerged2.printNode();
-			std::cout << std::endl;
-
 			FamilyTreeNode mergedNode = nodeToBeMerged1.mergeWith(nodeToBeMerged2);
 
 			//Remove merged clusters from total population
 			removeMergedClusters(nodeToBeMerged1, nodeToBeMerged2);
 
 			//Store distances to nodes not yet merged
-			storeNewNodeDistances(mergedNode, orderedInterClusterDistances);
+			storeNewNodeDistances(mergedNode);
 
 			//Store new node into list of nodes to be merged
 			this->nodesNotMergedYet.push_back(mergedNode);
@@ -163,26 +112,20 @@ FamilyTreeGraph::FamilyTreeGraph(std::vector<MitochondrialDnaSample> totalPopula
 	runHierarchicalClustering();
 }
 
-void FamilyTreeGraph::printChildrenAndThenSelf(std::shared_ptr<FamilyTreeNode> node) {
-
-
-	if (node->getLeftChild() == std::shared_ptr<FamilyTreeNode>(nullptr)) {
-		node->printNode();
-		return;
-	} else {
-		printChildrenAndThenSelf(node->getLeftChild());
-		printChildrenAndThenSelf(node->getRightChild());
-		node->printNode();
-	}
-
-}
-
 //Print the graph contents
 void FamilyTreeGraph::printGraph() {
 
-	std::cout << "Printing Graph" << std::endl;
-	FamilyTreeNode rootNode = this->graphNodes.back();
-	printChildrenAndThenSelf(std::make_shared<FamilyTreeNode>(rootNode));
+	long numberOfClusters = this->graphNodes.size();
+	for (int clusterIndex = numberOfClusters - 1; clusterIndex >= 0; --clusterIndex) {
+		if (this->graphNodes.at(clusterIndex).isLeafNode()) {
+			std::cout << "Node is " << this->graphNodes.at(clusterIndex).getLeafSampleLabel() << std::endl;
+		} else {
+			std::cout << "Node height " << std::to_string(this->graphNodes.at(clusterIndex).getNodeHeight()) << ", left edge length " << std::to_string(this->graphNodes.at(clusterIndex).getLeftEdgeLength()) << ", right edge length " << std::to_string(this->graphNodes.at(clusterIndex).getRightEdgeLength()) << std::endl;
+			std::cout << "Node contains " << this->graphNodes.at(clusterIndex).getNodeSampleLabels() << std::endl;
+
+		}
+
+	}
 
 }
 

@@ -20,10 +20,19 @@ FamilyTreeNode::FamilyTreeNode(std::vector<MitochondrialDnaSample> samplesInNode
 	this->samplesInNode = samplesInNode;
 	this->leftChild = std::shared_ptr<FamilyTreeNode>(nullptr);
 	this->rightChild = std::shared_ptr<FamilyTreeNode>(nullptr);
-	this->nodeHeight = 0;
-	this->leftEdgeLength = 0;
-	this->rightEdgeLength = 0;
+	this->nodeHeight = 0.0;
+	this->leftEdgeLength = 0.0;
+	this->rightEdgeLength = 0.0;
 }
+
+//Constructor
+FamilyTreeNode::FamilyTreeNode(std::vector<MitochondrialDnaSample> samplesInNode, MtDnaDistanceMatrix mtDnaDistanceMatrix, FamilyTreeNode& leftChild, FamilyTreeNode& rightChild) : mtDnaDistanceMatrix(mtDnaDistanceMatrix) {
+	this->samplesInNode = samplesInNode;
+	this->leftChild = std::make_shared<FamilyTreeNode>(leftChild);
+	this->rightChild = std::make_shared<FamilyTreeNode>(rightChild);
+	this->nodeHeight = 0.0;
+	this->leftEdgeLength = 0.0;
+	this->rightEdgeLength = 0.0;}
 
 //Copy constructor
 FamilyTreeNode::FamilyTreeNode (const FamilyTreeNode& other) : mtDnaDistanceMatrix(other.mtDnaDistanceMatrix) {
@@ -56,13 +65,14 @@ float FamilyTreeNode::distanceFrom(FamilyTreeNode other) {
 }
 
 //Set child nodes
-void FamilyTreeNode::setChildNodes(FamilyTreeNode leftChild, FamilyTreeNode rightChild) {
+void FamilyTreeNode::setChildNodes(FamilyTreeNode& leftChild, FamilyTreeNode& rightChild) {
+
 	this->leftChild = std::make_shared<FamilyTreeNode>(leftChild);
 	this->rightChild = std::make_shared<FamilyTreeNode>(rightChild);
 }
 
 //Merge the nodes and return the merged node
-FamilyTreeNode FamilyTreeNode::mergeWith(FamilyTreeNode other) {
+FamilyTreeNode FamilyTreeNode::mergeWith(FamilyTreeNode& other) {
 
 	//Create a merged list of mtDNA samples
 	std::vector<MitochondrialDnaSample> mtDnaSamplesInMergedNode;
@@ -77,10 +87,7 @@ FamilyTreeNode FamilyTreeNode::mergeWith(FamilyTreeNode other) {
 	}
 
 	//Create a merged node
-	FamilyTreeNode mergedNode(mtDnaSamplesInMergedNode, this->mtDnaDistanceMatrix);
-
-	//Specify the child nodes for the merged node
-	mergedNode.setChildNodes(*this, other);
+	FamilyTreeNode mergedNode(mtDnaSamplesInMergedNode, this->mtDnaDistanceMatrix, *this, other);
 
 	float distanceFromOther = distanceFrom(other);
 	mergedNode.nodeHeight = distanceFromOther / 2.0;
@@ -90,10 +97,25 @@ FamilyTreeNode FamilyTreeNode::mergeWith(FamilyTreeNode other) {
 	return mergedNode;
 }
 
+
+float FamilyTreeNode::getNodeHeight() {
+	return this->nodeHeight;
+}
+
+float FamilyTreeNode::getLeftEdgeLength() {
+	return this->leftEdgeLength;
+}
+
+float FamilyTreeNode::getRightEdgeLength() {
+	return this->rightEdgeLength;
+}
+
 //Print the node contents
 void FamilyTreeNode::printNode() {
 	std::cout << (this->samplesInNode.size() == 1 ? this->samplesInNode.at(0).getSampleLabel() : std::to_string(this->samplesInNode.size())) << " contents. ";
-	std::cout << "Node height " << this->nodeHeight << ", left edge " << this->leftEdgeLength << ", right edge " << this->rightEdgeLength << std::endl;
+	std::cout << "Node height " << this->nodeHeight << ", left edge " << this->leftEdgeLength << ", right edge " << this->rightEdgeLength;
+	std::cout << ", left child " << (this->leftChild == std::shared_ptr<FamilyTreeNode>(nullptr) ? "null" : std::to_string((this->leftChild->samplesInNode.size()))) << " elements";
+	std::cout << ", right child " << (this->rightChild == std::shared_ptr<FamilyTreeNode>(nullptr) ? "null" : std::to_string((this->rightChild->samplesInNode.size()))) << " elements" << std::endl;
 }
 
 const bool FamilyTreeNode::isLeafNode() const {
@@ -101,6 +123,33 @@ const bool FamilyTreeNode::isLeafNode() const {
 	return this->samplesInNode.size() == 1;
 
 }
+
+std::string FamilyTreeNode::getLeafSampleLabel() {
+
+	if (isLeafNode()) {
+		return this->samplesInNode.at(0).getSampleLabel();
+	} else {
+		return std::string("");
+	}
+
+}
+
+std::string FamilyTreeNode::getNodeSampleLabels() {
+
+	std::string nodeSampleLabels;
+	bool firstTime = true;
+	for (MitochondrialDnaSample mitochondrialDnaSample : this->samplesInNode) {
+		if (firstTime) {
+			firstTime = false;
+		} else {
+			nodeSampleLabels += ",";
+		}
+		nodeSampleLabels += mitochondrialDnaSample.getSampleLabel();
+	}
+	return nodeSampleLabels;
+
+}
+
 const int FamilyTreeNode::getLeafSampleNumber() const {
 
 	return this->samplesInNode.at(0).getSampleNumber();
@@ -122,7 +171,6 @@ const bool FamilyTreeNode::isTwoSamplesSame(std::vector<MitochondrialDnaSample> 
 	}
 
 }
-
 
 //Override the equal operator
 bool const FamilyTreeNode::operator==(const FamilyTreeNode& other) {
