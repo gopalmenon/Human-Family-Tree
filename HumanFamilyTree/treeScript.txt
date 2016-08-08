@@ -1,0 +1,1 @@
+(((Australian Aborigine:16.000000,Morocco Berber:16.000000):8.000000,(Morocco Berber Asni:11.000000,Morocco Berber Bouhria:11.000000):13.000000):2.875000,Australian:26.875000)

@@ -64,6 +64,10 @@ public:
 		return this->newickFormatNodeScript;
 	}
 
+	int getNumberOfSamplesInNode() {
+		return this->samplesInNode.size();
+	}
+
 	//Override the equal operator
 	bool const operator==(const FamilyTreeNode& other);
 

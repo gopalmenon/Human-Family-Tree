@@ -35,7 +35,7 @@ class FamilyTreeGraph {
 
 private:
 
-	const std::string PHYLOGENETIC_TREE_SCRIPT_TEXT_FILE = "../treeScript.txt";
+	const std::string PHYLOGENETIC_TREE_SCRIPT_TEXT_FILE = "../WorldTreeScript.txt";
 
 	std::vector<MitochondrialDnaSample> totalPopulation;
 	std::vector<FamilyTreeNode> graphNodes;

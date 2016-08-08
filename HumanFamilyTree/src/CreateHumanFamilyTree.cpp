@@ -19,6 +19,8 @@ int main() {
 	std::vector<MitochondrialDnaSample> mtDnaSamples = getAllFileContents();
 	MtDnaDistanceMatrix mtDnaDistanceMatrix(mtDnaSamples);
 
+	std::cout << "Distance Matrix Created" << std::endl;
+
 	FamilyTreeGraph familyTreeGraph(mtDnaSamples, mtDnaDistanceMatrix);
 	familyTreeGraph.printGraph();
 }

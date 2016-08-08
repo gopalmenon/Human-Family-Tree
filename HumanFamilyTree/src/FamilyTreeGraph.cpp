@@ -101,6 +101,8 @@ void FamilyTreeGraph::runHierarchicalClustering() {
 			//Merge the two closest clusters
 			FamilyTreeNode mergedNode = nodeToBeMerged1.mergeWith(nodeToBeMerged2);
 
+			std::cout << "Created merged node with " << mergedNode.getNumberOfSamplesInNode() << " mtDNA samples." << std::endl;
+
 			//Remove merged clusters from total population
 			removeMergedClusters(nodeToBeMerged1, nodeToBeMerged2);
 
