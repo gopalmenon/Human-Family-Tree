@@ -118,6 +118,7 @@
 \usepackage{mathtools}
 \usepackage{gensymb}
 \usepackage{csquotes}
+\usepackage{placeins}
 % *** GRAPHICS RELATED PACKAGES ***
 %
 \ifCLASSINFOpdf
@@ -385,6 +386,12 @@ Cann, Stoneking and Wilson as described in their paper \cite{mtDnaPaper} on Mito
 \label{HumanTree}
 \end{figure}
 
+\begin{figure}[!t]
+\centering
+\includegraphics[width=3.5in]{./figures/mtDNA.png}
+\caption{Mitochondrial DNA\cite{KhanAcademy}}
+\label{mtDNA}
+\end{figure}
 
 \begin{figure}[!t]
 \centering
@@ -408,11 +415,52 @@ Cann, Stoneking and Wilson as described in their paper \cite{mtDnaPaper} on Mito
 \IEEEpeerreviewmaketitle
 
 \section{Biological problem and its significance}
-Human mtDNA is comprised of 16,569 base pairs. It is contained in every cell of the body and is inherited only from the mother. In this regard, it is different from nuclear DNA that consists of genetic material from both parents. mtDNA does not have the ability for error checking during replication and is more susceptible to mutations than nuclear DNA. Restriction site differences or the edit distance between two samples can be used as an estimate on how many years ago was the common ancestor alive. Individuals with low edit distances between their mtDNA will have a more recent common ancestor. When humans migrate to a particular region, after a period of time, that region will have many humans with one of the migrated human females as a common ancestor. This common ancestor will be be more recent than the common ancestor for a descendant of one of the migrated humans and a descendant from the original population that did not migrate. mtDNA edit distance can be thus used to induce genealogical trees of the form shown in figure \ref{HumanTree}. This can lead to an understanding of the origins of populations of certain geographic regions and human migration paths. The paper written by Cann et. al. suggests that human beings originated in Africa since the common ancestor shown in figure \ref{HumanTree} would need to be African in order to minimize the number of intercontinental migrations needed to account for the geographic distribution of mtDNA types.
+mtDNA is comprised of 16,569 base pairs and is present only in cells in the animal kingdom. It is contained in almost every cell of the body and is inherited only from the mother. In this regard, it is different from nuclear DNA that consists of genetic material from both parents. mtDNA is thought to be a bacterium like organism that had been captured by a cell. It does not have the ability for error checking during replication and is more susceptible to mutations than nuclear DNA. Restriction site differences or the edit distance between two samples can be used as an estimate on how many years ago was the common ancestor alive. Individuals with low edit distances between their mtDNA will have a more recent common ancestor. When humans migrate to a particular region, after a period of time, that region will have many humans with one of the migrated human females as a common ancestor. This common ancestor will be be more recent than the common ancestor for a descendant of one of the migrated humans and a descendant from the original population that did not migrate. mtDNA edit distance can be thus used to induce genealogical trees of the form shown in figure \ref{HumanTree}. This can lead to an understanding of the origins of populations of certain geographic regions and human migration paths. The paper written by Cann et. al. suggests that human beings originated in Africa since the common ancestor shown in figure \ref{HumanTree} would need to be African in order to minimize the number of intercontinental migrations needed to account for the geographic distribution of mtDNA types.\\
 
+The human mtDNA molecular clock is the rate at which mutations have been accumulating in the mitochondrial genome. The mutation rate differs between coding and non-coding regions of the mtDNA. Coding region mutations may be fatal or may lead to other complications and due to rthis reason, mutations in this region will lead to purifying selection. Some studies avoid coding region mutations, while other studies consider both regions 
+ and apply a correction factor for selection in coding region. 
+
+\FloatBarrier
 \section{Computer science problem}
 \subsection{Edit Distance}
-The edit distance between two mtDNA sequences can be found using Dynamic Programming. Since only the edit distance score is needed, the computation can be done using an array of two columns with the number of rows equal to the length of a mtDNA sequence. For 2699 samples (see figure \ref{DataSize}), 3.6 million edit distance computations would need to be done. Even with C++, this amount of computation would take too long to execute. In order to complete the project, either the number of samples would need to be reduced or the project would need to be executed on a parallel computation environment using a Map-Reduce or equivalent framework.
+The edit distance between two mtDNA sequences can be found using Dynamic Programming. Since only the edit distance score is needed, the computation can be done using an array of two columns with the number of rows equal to the length of a mtDNA sequence. For 2699 samples (see figure \ref{DataSize}), 3.6 million edit distance computations would need to be done. Even with C++, this amount of computation would take too long to execute. In order to complete the project, a subset of the samples was used. A penalty of $1$ was used for insertion, deletion and substitution during edit distance computation.
+
+\FloatBarrier
+\subsection{Clustering}
+The evolutionary tree would need to be found out by running clustering on the mtDNA samples using the edit distance as the input to clustering. mtDNA samples with smaller edit distances would form clusters. These would be clusters corresponding to leaves of the evolutionary tree with a common ancestor. The clusters would then be combined based on the distance between the cluster centroids. This would give us common ancestors of the initial clusters. The process would be repeated till we find a common ancestor for all the mtDNA samples. 
+
+The Unweighted Pair Group Method with Arithmetic Mean (UPGMA) algorithm \cite{TextBook1} was used for heirarchical clustering of mtDNA samples. The length of an edge between two clusters will be the difference in heights between them and will be a measure of their separation in years. Given two clusters $C_1$ and $C_2$, the UPGMA algorithm defines the distance between them to be the average pairwise distance: \\
+
+$D(C_1, C_2) =\frac{1}{\left | C_1 \right | \left | C_2 \right |} \sum_{i \epsilon C_1} \sum_{j \epsilon C_2} D\left (i, j \right )$\\
+
+Algorithm \ref{UPGMAAlgorithm} shows the details of the algorithm and it is called with parameters $D$, the edit distance matrix and $n$ the number of elements.
+
+\begin{minipage}{\linewidth}
+  \begin{algorithm}[H]
+    \caption{UPGMA Algorithm}\label{UPGMAAlgorithm}
+    \begin{algorithmic}[1]
+      \Procedure{UPGMAAlgorithm.$UPGMA(D, n)$}{}
+        \State Form $n$ clusters, each with a single element
+        \State \parbox[t]{\dimexpr\linewidth-\algorithmicindent}{Construct graph $T$ by assigning isolated vertex to each cluster\strut}
+        \State Assign height $h(v) = 0$ to every vertex $v$ in graph
+        \While{there is more than one cluster}
+          \State Find two closest clusters $C_1$ and $C_2$
+          \State \parbox[t]{\dimexpr\linewidth-\algorithmicindent}{Merge $C_1$ and $C_2$ into a new cluster $C$ with $\left | C_1 \right | + \left | C_2 \right  |$ elements\strut}
+          \For{every cluster $C^* \not = C$}
+            \State \parbox[t]{\dimexpr\linewidth-\algorithmicindent}{$D(C, C^*) =\frac{1}{\left | C \right | \left | C^* \right |} \sum_{i \epsilon C} \sum_{j \epsilon C^*} D\left (i, j \right )$\strut}
+          \EndFor
+          \State  \parbox[t]{\dimexpr\linewidth-\algorithmicindent}{Add a new vertex $C$ to $T$ and connect to vertices $C_1$ and $C_2$\strut}
+          \State Vertex height $h(C) = \frac{D(C_1, C_2)}{2}$
+          \State Assign length $h(C) - h(C_1)$ to the edge $(C_1, C)$
+          \State Assign length $h(C) - h(C_2)$ to the edge $(C_2, C)$
+          \State \parbox[t]{\dimexpr\linewidth-\algorithmicindent}{Remove rows and columns of $D$ corresponding to $C_1$ and $C_2$\strut}
+          \State \parbox[t]{\dimexpr\linewidth-\algorithmicindent}{Add a row and column to $D$ for the new cluster $C$\strut}
+        \EndWhile
+       \State return $T$
+      \EndProcedure
+    \end{algorithmic}
+  \end{algorithm}
+\end{minipage}\\\\
 
 \begin{figure}[!t]
 \centering
@@ -421,52 +469,137 @@ The edit distance between two mtDNA sequences can be found using Dynamic Program
 \label{DataSize}
 \end{figure}
 
-\subsection{Clustering}
-The evolutionary tree would need to be found out by running clustering on the mtDNA samples using the edit distance as the input to clustering. mtDNA samples with smaller edit distances would form clusters. These would be clusters corresponding to leaves of the evolutionary tree with a common ancestor. The clusters would then be combined based on the distance between the cluster centroids. This would give us common ancestors of the initial clusters. The process would be repeated till we find a common ancestor for all the mtDNA samples. 
-
-\section{Project Plan}
+\section{Tasks}
 
 \subsection{Download mtDNA sequences}
-2699 mtDNA sequences will be downloaded into text files from the Human Mitochondrial Genome Database \cite{mtDnaDatabase}.
+A subset of the 2699 mtDNA sequences was downloaded into text files from the Human Mitochondrial Genome Database \cite{mtDnaDatabase}.
 
 \subsection{Compute Edit Distance Matrix}
 
-The edit distance matrix will be computed by finding out the edit distance using all possible pairs of mtDNA. As of this point of time, the computation involved is very large and either a subset of the database will be used or access to a parallel computing environment will need to be obtained.
+The edit distance matrix for the subset of the samples was be computed by finding out the edit distance using all possible pairs of mtDNA. 
 
 \subsection{Clustering and Evolutionary Tree}
-Clustering will be done using the UPGMA (Unweighted Pair Group Method with Arithmetic Mean) clustering algorithm as described in \cite{TextBook1} in order to create an evolutionary tree.
+Clustering was done using the UPGMA (Unweighted Pair Group Method with Arithmetic Mean) clustering algorithm as described in \cite{TextBook1} in order to create an evolutionary tree.
 
 \subsection{Evolutionary Tree Illustration}
-Once the data for the evolutionary tree is available, Java graphical user interface components will be used for showing the tree.
-
-\section{Schedule}
-
-\begin{tabular}{ | l | l |}
-  \hline			
-  Work Item & Target Completion  \\
-  \hline			
-  Complete project proposal presentation & July 25, 2016  \\
-  \hline			
-  Download mtDNA sequences & July 27, 2016  \\
-  \hline			
-  Complete project proposal report & July 27, 2016  \\
-  \hline			
-  Compute Edit Distance Matrix & July 31, 2016  \\
-  \hline			
-  Compute Evolutionary Tree & August 7, 2016 \\
-  \hline			
-  Evolutionary Tree GUI & August 9, 2016 \\
-  \hline			
-  Final report and presentation & August 11, 2016 \\
-  \hline  
-\end{tabular}
+A script for showing the evolutionary tree was generated during clustering. The script was generated in the Newick format \cite{Newick}. An example of this format is shown in figure \ref{NewickFormat}. Nested parentheses are used for specifying heirarchy where node name is followed by colon and node height. An the Newick format script for the tree shown in figure \ref{NewickFormat} is $(A:0.1,B:0.2,(C:0.3,D:0.4):0.5)$.
 
 
+\begin{figure}[!t]
+\centering
+\includegraphics[width=3.5in]{./figures/Newick.png}
+\caption{Newick format illustration \cite{Newick} .}
+\label{NewickFormat}
+\end{figure}
 
+\FloatBarrier
+\section{Results}
+
+\FloatBarrier
+\subsection{Africa Evolutionary Tree}
+
+The tree is shown in figure \ref{AfricaTree}. We can see that groups with large separation (with a less recent common ancestor) are all from sub-saharan Africa. They appear to be the humans whose common ancestor is Mitochondrial Eve. People who live near to each other appear to have a more recent common ancestor like in the case of Morocco and Canary Islands
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=3.5in]{./figures/AfricaTree.png}
+\caption{Africa Phylogenetic Tree}
+\label{AfricaTree}
+\end{figure}
+
+\FloatBarrier
+\subsection{South Asia and Middle East Evolutionary Tree}
+
+The tree is shown in figure \ref{SouthAsianMiddleEastTree}. Mainland Indians (figure \ref{KalPenn}) are closer to Onges (figure \ref{OngeWoman}) than they are to Iraqis (figure \ref{Maliki}). Outward features are thought to be  a more recent development from around 50,000 years ago \cite{TextBook1} and these cannot be used a guide to gauge the closeness of relations between peoples.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=3.5in]{./figures/SouthAsianMiddleEastTree.png}
+\caption{South Asia and Middle East Phylogenetic Tree}
+\label{SouthAsianMiddleEastTree}
+\end{figure}
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=3.5in]{./figures/CalPenn.png}
+\caption{Kal Penn - Actor of Gujrati Indian ethnicity}
+\label{KalPenn}
+\end{figure}
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=2.0in]{./figures/OngeWoman.png}
+\caption{Woman of Onge Indian ethnicity}
+\label{OngeWoman}
+\end{figure}
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=2.0in]{./figures/Maliki.png}
+\caption{Nouri Al-Maliki - ex Prime Minister of Iraq}
+\label{Maliki}
+\end{figure}
+
+\FloatBarrier
+\subsection{Asia Evolutionary Tree}
+
+The tree is shown in figure \ref{AsianTree}. Japanese and Han Chinese are very closely related. However their culture and customs are very different. Khirgiz and Korean mtDNA samples were identical and this is the reason these two sample show a very recent common ancestor.
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=3.5in]{./figures/AsianTree.png}
+\caption{Asia Phylogenetic Tree}
+\label{AsianTree}
+\end{figure}
+
+\FloatBarrier
+\subsection{Europe Evolutionary Tree}
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=3.5in]{./figures/EuropeTree.png}
+\caption{Europe Phylogenetic Tree}
+\label{EuropeTree}
+\end{figure}
+
+\FloatBarrier
+\subsection{Oceania and Pacific Islands Evolutionary Tree}
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=3.5in]{./figures/IslandsTree.png}
+\caption{Oceania and Pacific Islands Evolutionary Tree}
+\label{IslandsTree}
+\end{figure}
+
+\FloatBarrier
+\subsection{North and South America Evolutionary Tree}
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=3.5in]{./figures/AmericasTree.png}
+\caption{North and South America Phylogenetic Tree}
+\label{AmericasTree}
+\end{figure}
+
+\FloatBarrier
+\subsection{World Evolutionary Tree}
+
+\begin{figure}[!t]
+\centering
+\includegraphics[width=3.5in]{./figures/AbridgedWorldTree.png}
+\caption{Abridged World Phylogenetic Tree}
+\label{AbridgedWorldTree}
+\end{figure}
+
+\FloatBarrier
 \begin{thebibliography}{1}
 
+\bibitem{KhanAcademy}
+\enquote{Khan Academy.} \textit{Khan Academy}. N.p., n.d. Web. 10 Aug. 2016.
+
 \bibitem{mtDnaPaper}
-\textit{Nature.com}. Nature Publishing Group, n.d. Web. 25 July 2016.
+Cann, L. C., M. Stoneking, and A. C. Wilson. \enquote{Mitochondrial DNA and human evolution.} \textit{Nature} 325 (1987): 1-5.
 
 \bibitem{wikiMtEve}
 \enquote{Mitochondrial Eve.} \textit{Wikipedia}. Wikimedia Foundation, n.d. Web. 24 July 2016.
@@ -479,7 +612,8 @@ Jones, Neil C., and Pavel Pevzner. \textit{An Introduction to Bioinformatics Alg
 
 \bibitem{Haplogroup}
 \enquote{Human Mitochondrial DNA Haplogroup.} \textit{Wikipedia}. Wikimedia Foundation, n.d. Web. 25 July 2016.
-
+\bibitem{Newick} 
+\enquote{Newick Format.} \textit{Wikipedia}. Wikimedia Foundation, n.d. Web. 08 Aug. 2016.
 \end{thebibliography}
 
 \end{document}
