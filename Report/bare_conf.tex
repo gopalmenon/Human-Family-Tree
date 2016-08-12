@@ -376,7 +376,7 @@ Email: gopal.menon@aggiemail.usu.edu}
 % As a general rule, do not put math, special symbols or citations
 % in the abstract
 \begin{abstract}
-Cann, Stoneking and Wilson as described in their paper \cite{mtDnaPaper} on Mitochondrial DNA and human evolution used 147 human mitochondrial DNA (mtDNA) samples, and performed restriction mapping on each sample. The restriction sites were mapped using known human mtDNA sequences. The number of restriction site differences between each pair of individuals gave them the extent of the nucleotide sequence divergence. mtDNA is inherited from the mother and unlike nuclear DNA, does not go through combination of DNA from both the parents. All living human beings are thought to have descended from one common ancestor \cite{wikiMtEve}. This is not to be thought of as a specific person, since whenever an ancient mtDNA branch dies out, the most recent common ancestor (MRCA) moves to a more recent female ancestor. The restriction site differences between all the pairs of individuals were used to induce a genealogical tree shown in figure \ref{HumanTree}. This tree suggested that human beings originated in Africa and then settled the rest of the planet as shown in figure \ref{HumanMigration}. The aim of the project is to start with mtDNA samples from a varied group of people and compute the alignment distance matrix for all pairs of samples. Using this matrix, an evolutionary tree and hierarchical clustering algorithm needs to be implemented in order to induce a tree similar to the one shown in \ref{HumanTree}. 
+Cann, Stoneking and Wilson as described in their paper \cite{mtDnaPaper} on Mitochondrial DNA and human evolution used 147 human mitochondrial DNA (mtDNA) samples, and performed restriction mapping on each sample. The restriction sites were mapped using known human mtDNA sequences. The number of restriction site differences between each pair of individuals gave them the extent of the nucleotide sequence divergence. mtDNA is inherited from the mother and unlike nuclear DNA, does not go through combination of DNA from both the parents. All living human beings are thought to have descended from one common ancestor \cite{wikiMtEve}. This is not to be thought of as a specific person, since whenever an ancient mtDNA branch dies out, the most recent common ancestor (MRCA) moves to a more recent female ancestor. The restriction site differences between all the pairs of individuals were used to induce a genealogical tree shown in figure \ref{HumanTree}. This tree suggested that human beings originated in Africa and then settled the rest of the planet as shown in figure \ref{HumanMigration}. The aim of the project is to start with mtDNA samples from a varied group of people and compute the alignment distance matrix for all pairs of samples. Using this matrix, an evolutionary tree and hierarchical clustering algorithm needs to be implemented in order to induce a tree similar to the one shown in figure \ref{HumanTree}. 
 \end{abstract}
 
 \begin{figure}[!t]
@@ -415,10 +415,21 @@ Cann, Stoneking and Wilson as described in their paper \cite{mtDnaPaper} on Mito
 \IEEEpeerreviewmaketitle
 
 \section{Biological problem and its significance}
-mtDNA is comprised of 16,569 base pairs and is present only in cells in the animal kingdom. It is contained in almost every cell of the body and is inherited only from the mother. In this regard, it is different from nuclear DNA that consists of genetic material from both parents. mtDNA is thought to be a bacterium like organism that had been captured by a cell. It does not have the ability for error checking during replication and is more susceptible to mutations than nuclear DNA. Restriction site differences or the edit distance between two samples can be used as an estimate on how many years ago was the common ancestor alive. Individuals with low edit distances between their mtDNA will have a more recent common ancestor. When humans migrate to a particular region, after a period of time, that region will have many humans with one of the migrated human females as a common ancestor. This common ancestor will be be more recent than the common ancestor for a descendant of one of the migrated humans and a descendant from the original population that did not migrate. mtDNA edit distance can be thus used to induce genealogical trees of the form shown in figure \ref{HumanTree}. This can lead to an understanding of the origins of populations of certain geographic regions and human migration paths. The paper written by Cann et. al. suggests that human beings originated in Africa since the common ancestor shown in figure \ref{HumanTree} would need to be African in order to minimize the number of intercontinental migrations needed to account for the geographic distribution of mtDNA types.\\
+mtDNA is comprised of 16,569 base pairs and is present only in cells in the animal kingdom. Figure \ref{mtDNA} shows a graphic of mtDNA within a cell. It is contained in almost every cell of the body and is inherited only from the mother. In this regard, it is different from nuclear DNA that consists of genetic material from both parents. mtDNA is thought to be a bacterium like organism that had been captured by a cell. It does not have the ability for error checking during replication and is more susceptible to mutations than nuclear DNA. Restriction site differences or the edit distance between two samples can be used as an estimate on how many years ago was the common ancestor alive. Individuals with low edit distances between their mtDNA will have a more recent common ancestor. When humans migrate to a particular region, after a period of time, that region will have many humans with one of the migrated human females as a common ancestor. This common ancestor will be be more recent than the common ancestor for a descendant of one of the migrated humans and a descendant from the original population that did not migrate. mtDNA edit distance can be thus used to induce genealogical trees of the form shown in figure \ref{HumanTree}. This can lead to an understanding of the origins of populations of certain geographic regions and human migration paths. The paper written by Cann et. al. suggests that human beings originated in Africa since the common ancestor shown in figure \ref{HumanTree} would need to be African in order to minimize the number of intercontinental migrations needed to account for the geographic distribution of mtDNA types.\\
 
 The human mtDNA molecular clock is the rate at which mutations have been accumulating in the mitochondrial genome. The mutation rate differs between coding and non-coding regions of the mtDNA. Coding region mutations may be fatal or may lead to other complications and due to rthis reason, mutations in this region will lead to purifying selection. Some studies avoid coding region mutations, while other studies consider both regions 
  and apply a correction factor for selection in coding region. 
+
+\FloatBarrier
+\section{Other Similar studies}
+
+\subsection{Neanderthal DNA Sequences and Origin of Modern Humans}
+
+As part of the study \cite{Neanderthals}, DNA material was extracted from a Neanderthal specimen found in 1856 in western Germany. A hitherto unknown mitochondrial mtDNA sequence was found in the specimen. Sequence comparisons with human mtDNA sequences, as well as phylogenetic analyses, showed that the Neanderthal sequence fell outside the variation of modern humans. Furthermore, the age of the common ancestor of the Neanderthal and modern human mtDNAs was estimated to be four times greater than that of the common ancestor of human mtDNAs. This suggested that Neanderthals went extinct without contributing mtDNA to modern humans as an ancestor.
+
+\subsection{An early modern human from Romania with a recent Neanderthal ancestor}
+
+Neanderthals are thought to have disappeared in Europe ~39,000-41,000 years ago but they have contributed one to three percent of the DNA of present-day people in Eurasia. In the study \cite{Romania}, they analyzed DNA from a 37,000-42,000-year-old modern human from Pestera cu Oase, Romania. Although the specimen contained small amounts of human DNA, they used an enrichment strategy to isolate sites that were informative about its relationship to Neanderthals and present-day humans. They found that on the order of six to nine percent of the genome of the Oase individual was derived from Neanderthals, more than any other modern human sequenced to date. Three chromosomal segments of Neanderthal ancestry were over 50 centimorgans in size, indicating that this individual had a Neanderthal ancestor as recently as four to six generations back. However, the Oase individual did not share more alleles with later Europeans than with East Asians, suggesting that the Oase population did not contribute substantially to later humans in Europe.
 
 \FloatBarrier
 \section{Computer science problem}
@@ -434,7 +445,7 @@ The Unweighted Pair Group Method with Arithmetic Mean (UPGMA) algorithm \cite{Te
 $D(C_1, C_2) =\frac{1}{\left | C_1 \right | \left | C_2 \right |} \sum_{i \epsilon C_1} \sum_{j \epsilon C_2} D\left (i, j \right )$\\
 
 Algorithm \ref{UPGMAAlgorithm} shows the details of the algorithm and it is called with parameters $D$, the edit distance matrix and $n$ the number of elements.
-
+\floatevery{algorithm}{\setlength\hsize{7cm}}
 \begin{minipage}{\linewidth}
   \begin{algorithm}[H]
     \caption{UPGMA Algorithm}\label{UPGMAAlgorithm}
@@ -472,17 +483,17 @@ Algorithm \ref{UPGMAAlgorithm} shows the details of the algorithm and it is call
 \section{Tasks}
 
 \subsection{Download mtDNA sequences}
-A subset of the 2699 mtDNA sequences was downloaded into text files from the Human Mitochondrial Genome Database \cite{mtDnaDatabase}.
+A subset of the 2699 mtDNA sequences was downloaded into text files from the Human Mitochondrial Genome Database \cite{mtDnaDatabase}. The subset details can be seen by referring to the phylogenetic trees in this report.
 
 \subsection{Compute Edit Distance Matrix}
 
 The edit distance matrix for the subset of the samples was be computed by finding out the edit distance using all possible pairs of mtDNA. 
 
 \subsection{Clustering and Evolutionary Tree}
-Clustering was done using the UPGMA (Unweighted Pair Group Method with Arithmetic Mean) clustering algorithm as described in \cite{TextBook1} in order to create an evolutionary tree.
+Clustering was done using the UPGMA (Unweighted Pair Group Method with Arithmetic Mean) clustering algorithm as described above in order to create an evolutionary tree.
 
 \subsection{Evolutionary Tree Illustration}
-A script for showing the evolutionary tree was generated during clustering. The script was generated in the Newick format \cite{Newick}. An example of this format is shown in figure \ref{NewickFormat}. Nested parentheses are used for specifying heirarchy where node name is followed by colon and node height. An the Newick format script for the tree shown in figure \ref{NewickFormat} is $(A:0.1,B:0.2,(C:0.3,D:0.4):0.5)$.
+A script for showing the evolutionary tree was generated during clustering. The script was generated in the Newick format \cite{Newick}. An example of this format is shown in figure \ref{NewickFormat}. Nested parentheses are used for specifying heirarchy where node name is followed by colon and node height. The Newick format script for the tree shown in figure \ref{NewickFormat} is $(A:0.1,B:0.2,(C:0.3,D:0.4):0.5)$.
 
 
 \begin{figure}[!t]
@@ -555,6 +566,9 @@ The tree is shown in figure \ref{AsianTree}. Japanese and Han Chinese are very c
 \FloatBarrier
 \subsection{Europe Evolutionary Tree}
 
+The tree is shown in figure \ref{EuropeTree}. People from Spain are not very close in terms of a recent common ancestor. This can be seen in Spanish samples from Andalusia, Leon, Galicia and Maragato. Similar is the case with Italians. French people are closer to Crimean Tatars than to Europeans from closer regions.The European American seems to have a matrilineal ancestor from Southern Italy.
+
+
 \begin{figure}[!t]
 \centering
 \includegraphics[width=3.5in]{./figures/EuropeTree.png}
@@ -564,6 +578,9 @@ The tree is shown in figure \ref{AsianTree}. Japanese and Han Chinese are very c
 
 \FloatBarrier
 \subsection{Oceania and Pacific Islands Evolutionary Tree}
+
+The tree is shown in figure \ref{IslandsTree}. Papua New Guinea (PNG) people seem to be further apart from each other than other groups in the tree with a common ancestor.
+PNG is on the eastern side of one island and is not a very large country.
 
 \begin{figure}[!t]
 \centering
@@ -575,6 +592,8 @@ The tree is shown in figure \ref{AsianTree}. Japanese and Han Chinese are very c
 \FloatBarrier
 \subsection{North and South America Evolutionary Tree}
 
+The tree shown in figure \ref{AmericasTree}. North American and Guarini (from different continents) samples are closer than North American and Navajo (from the same continent).
+
 \begin{figure}[!t]
 \centering
 \includegraphics[width=3.5in]{./figures/AmericasTree.png}
@@ -584,6 +603,8 @@ The tree is shown in figure \ref{AsianTree}. Japanese and Han Chinese are very c
 
 \FloatBarrier
 \subsection{World Evolutionary Tree}
+
+The tree is shown in figure \ref{AbridgedWorldTree}. People mostly grouped by geographic region. Some unexplained cases are Guarini (from South America) and Navajo (from North America) are in separate branches altogether. Nicobarese (from Indian islands) and Piman (from North America) have a comparatively recent common ancestor. 
 
 \begin{figure}[!t]
 \centering
@@ -614,6 +635,11 @@ Jones, Neil C., and Pavel Pevzner. \textit{An Introduction to Bioinformatics Alg
 \enquote{Human Mitochondrial DNA Haplogroup.} \textit{Wikipedia}. Wikimedia Foundation, n.d. Web. 25 July 2016.
 \bibitem{Newick} 
 \enquote{Newick Format.} \textit{Wikipedia}. Wikimedia Foundation, n.d. Web. 08 Aug. 2016.
+\bibitem{Neanderthals}
+Krings, Matthias, et al. \enquote{Neandertal DNA sequences and the origin of modern humans.} cell 90.1 (1997): 19-30.
+
+\bibitem{Romania}
+Fu, Qiaomei, et al. \enquote{An early modern human from Romania with a recent Neanderthal ancestor.} \textit{Nature} 524.7564 (2015): 216-219.
 \end{thebibliography}
 
 \end{document}
