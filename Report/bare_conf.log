@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  15 AUG 2016 19:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  15 AUG 2016 20:17
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -646,6 +646,11 @@ Overfull \hbox (0.94499pt too wide) in paragraph at lines 611--612
  []
 
 
+Underfull \hbox (badness 10000) in paragraph at lines 618--619
+
+ []
+
+
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
 
@@ -661,7 +666,7 @@ Before submitting the final camera ready copy, remember to:
 Here is how much of TeX's memory you used:
  5134 strings out of 493089
  79694 string characters out of 6134842
- 168578 words of memory out of 5000000
+ 168579 words of memory out of 5000000
  8536 multiletter control sequences out of 15000+600000
  35704 words of font info for 66 fonts, out of 8000000 for 9000
  1144 hyphenation exceptions out of 8191
@@ -680,7 +685,7 @@ exlive/2015/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/201
 5/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2015/texmf-d
 ist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/
 type1/urw/times/utmri8a.pfb>
-Output written on bare_conf.pdf (6 pages, 1160031 bytes).
+Output written on bare_conf.pdf (6 pages, 1161195 bytes).
 PDF statistics:
  123 PDF objects out of 1000 (max. 8388607)
  68 compressed objects within 1 object stream
