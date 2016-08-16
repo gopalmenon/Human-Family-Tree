@@ -417,7 +417,7 @@ Cann, Stoneking and Wilson as described in their paper \cite{mtDnaPaper} on Mito
 \section{Biological problem and its significance}
 mtDNA is comprised of 16,569 base pairs and is present only in cells in the animal kingdom. Figure \ref{mtDNA} shows a graphic of mtDNA within a cell. It is contained in almost every cell of the body and is inherited only from the mother. In this regard, it is different from nuclear DNA that consists of genetic material from both parents. mtDNA is thought to be a bacterium like organism that had been captured by a cell. It does not have the ability for error checking during replication and is more susceptible to mutations than nuclear DNA. Restriction site differences or the edit distance between two samples can be used as an estimate on how many years ago was the common ancestor alive. Individuals with low edit distances between their mtDNA will have a more recent common ancestor. When humans migrate to a particular region, after a period of time, that region will have many humans with one of the migrated human females as a common ancestor. This common ancestor will be be more recent than the common ancestor for a descendant of one of the migrated humans and a descendant from the original population that did not migrate. mtDNA edit distance can be thus used to induce genealogical trees of the form shown in figure \ref{HumanTree}. This can lead to an understanding of the origins of populations of certain geographic regions and human migration paths. The paper written by Cann et. al. suggests that human beings originated in Africa since the common ancestor shown in figure \ref{HumanTree} would need to be African in order to minimize the number of intercontinental migrations needed to account for the geographic distribution of mtDNA types.\\
 
-The human mtDNA molecular clock is the rate at which mutations have been accumulating in the mitochondrial genome. The mutation rate differs between coding and non-coding regions of the mtDNA. Coding region mutations may be fatal or may lead to other complications and due to rthis reason, mutations in this region will lead to purifying selection. Some studies avoid coding region mutations, while other studies consider both regions 
+The human mtDNA molecular clock is the rate at which mutations have been accumulating in the mitochondrial genome. The mutation rate differs between coding and non-coding regions of the mtDNA. Coding region mutations may be fatal or may lead to other complications and due to this reason, mutations in this region will lead to purifying selections. Some studies avoid coding region mutations, while other studies consider both regions 
  and apply a correction factor for selection in coding region. 
 
 \FloatBarrier
@@ -438,7 +438,7 @@ The edit distance between two mtDNA sequences can be found using Dynamic Program
 
 \FloatBarrier
 \subsection{Clustering}
-The evolutionary tree would need to be found out by running clustering on the mtDNA samples using the edit distance as the input to clustering. mtDNA samples with smaller edit distances would form clusters. These would be clusters corresponding to leaves of the evolutionary tree with a common ancestor. The clusters would then be combined based on the distance between the cluster centroids. This would give us common ancestors of the initial clusters. The process would be repeated till we find a common ancestor for all the mtDNA samples. 
+The evolutionary tree was found out by running clustering on the mtDNA samples using the edit distance as the input to clustering. mtDNA samples with smaller edit distances would form clusters. These would be clusters corresponding to leaves of the evolutionary tree with a common ancestor. The clusters would then be combined based on the distance between the cluster centroids. This would give us common ancestors of the initial clusters. The process would be repeated till we find a common ancestor for all the mtDNA samples. 
 
 The Unweighted Pair Group Method with Arithmetic Mean (UPGMA) algorithm \cite{TextBook1} was used for heirarchical clustering of mtDNA samples. The length of an edge between two clusters will be the difference in heights between them and will be a measure of their separation in years. Given two clusters $C_1$ and $C_2$, the UPGMA algorithm defines the distance between them to be the average pairwise distance: \\
 
@@ -483,11 +483,11 @@ Algorithm \ref{UPGMAAlgorithm} shows the details of the algorithm and it is call
 \section{Tasks}
 
 \subsection{Download mtDNA sequences}
-A subset of the 2699 mtDNA sequences was downloaded into text files from the Human Mitochondrial Genome Database \cite{mtDnaDatabase}. The subset details can be seen by referring to the phylogenetic trees in this report.
+A subset of the 2699 mtDNA sequences was downloaded into text files from the Human Mitochondrial Genome Database \cite{mtDnaDatabase}. Furthermore, clustering was run on a further subset. The subset details can be seen by referring to the phylogenetic trees in this report.
 
 \subsection{Compute Edit Distance Matrix}
 
-The edit distance matrix for the subset of the samples was be computed by finding out the edit distance using all possible pairs of mtDNA. 
+The edit distance matrix for the subset of the samples was computed by finding out the edit distance for all possible pairs of mtDNA. 
 
 \subsection{Clustering and Evolutionary Tree}
 Clustering was done using the UPGMA (Unweighted Pair Group Method with Arithmetic Mean) clustering algorithm as described above in order to create an evolutionary tree.
@@ -509,7 +509,7 @@ A script for showing the evolutionary tree was generated during clustering. The 
 \FloatBarrier
 \subsection{Africa Evolutionary Tree}
 
-The tree is shown in figure \ref{AfricaTree}. We can see that groups with large separation (with a less recent common ancestor) are all from sub-saharan Africa. They appear to be the humans whose common ancestor is Mitochondrial Eve. People who live near to each other appear to have a more recent common ancestor like in the case of Morocco and Canary Islands
+The tree is shown in figure \ref{AfricaTree}. The number $9.99$ at the bottom left of the tree is the scale and represents the edit distance. We can see that groups with large separation (with a less recent common ancestor) are all from sub-saharan Africa. They appear to be the humans whose common ancestor is Mitochondrial Eve. People who live near to each other appear to have a more recent common ancestor like in the case of Morocco and Canary Islands
 
 \begin{figure}[!t]
 \centering
@@ -554,7 +554,7 @@ The tree is shown in figure \ref{SouthAsianMiddleEastTree}. Mainland Indians (fi
 \FloatBarrier
 \subsection{Asia Evolutionary Tree}
 
-The tree is shown in figure \ref{AsianTree}. Japanese and Han Chinese are very closely related. However their culture and customs are very different. Khirgiz and Korean mtDNA samples were identical and this is the reason these two sample show a very recent common ancestor.
+The tree is shown in figure \ref{AsianTree}. Japanese and Han Chinese are very closely related. However their culture and customs are very different. Khirgiz and Korean mtDNA samples were identical and this is the reason these two sample show a very recent common ancestor. This was a problem with the data.
 
 \begin{figure}[!t]
 \centering
@@ -604,12 +604,12 @@ The tree shown in figure \ref{AmericasTree}. North American and Guarini (from di
 \FloatBarrier
 \subsection{World Evolutionary Tree}
 
-The tree is shown in figure \ref{AbridgedWorldTree}. People mostly grouped by geographic region. Some unexplained cases are Guarini (from South America) and Navajo (from North America) are in separate branches altogether. Nicobarese (from Indian islands) and Piman (from North America) have a comparatively recent common ancestor. 
+The tree is shown in figure \ref{AbridgedWorldTree}. People are mostly grouped by geographic region. Some unexplained cases are Guarini (from South America) and Navajo (from North America) are in separate branches altogether. I would have expected them to be closer. Nicobarese (from Indian islands) and Piman (from North America) have a comparatively recent common ancestor even they are on different continents.
 
 \begin{figure}[!t]
 \centering
 \includegraphics[width=3.5in]{./figures/AbridgedWorldTree.png}
-\caption{Abridged World Phylogenetic Tree}
+\caption{World Phylogenetic Tree}
 \label{AbridgedWorldTree}
 \end{figure}
 
@@ -641,5 +641,14 @@ Krings, Matthias, et al. \enquote{Neandertal DNA sequences and the origin of mod
 \bibitem{Romania}
 Fu, Qiaomei, et al. \enquote{An early modern human from Romania with a recent Neanderthal ancestor.} \textit{Nature} 524.7564 (2015): 216-219.
 \end{thebibliography}
+
+\section{Appendix}
+\subsection{Running the program}
+\label{sssec:num1} 
+
+The program runs clustering on the mtDNA samples that are listed in the text file \textit{fileListing.txt}. This text file must contain the names of the downloaded mtDNA sample files that are in text format. The mtDNA samples should have nucleotide strings without embedded spaces. They can be separated by line feeds. The input data should be in the format that the human mtDNA samples are in the mtDNA database \cite{mtDnaDatabase}.
+
+\subsection{Obtaining the tree script}
+The program will create the script in file \textit{WorldTreeScript.txt}. This file can be uploaded to the website \url{http://etetoolkit.org/treeview/} for viewing the tree.
 
 \end{document}

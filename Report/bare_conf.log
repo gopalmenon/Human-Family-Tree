@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  11 AUG 2016 22:14
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  15 AUG 2016 19:44
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -659,10 +659,10 @@ Before submitting the final camera ready copy, remember to:
 [6 <./figures/AmericasTree.png> <./figures/AbridgedWorldTree.png>]
 (./bare_conf.aux) ) 
 Here is how much of TeX's memory you used:
- 5133 strings out of 493089
- 79682 string characters out of 6134842
- 169562 words of memory out of 5000000
- 8535 multiletter control sequences out of 15000+600000
+ 5134 strings out of 493089
+ 79694 string characters out of 6134842
+ 168578 words of memory out of 5000000
+ 8536 multiletter control sequences out of 15000+600000
  35704 words of font info for 66 fonts, out of 8000000 for 9000
  1144 hyphenation exceptions out of 8191
  51i,8n,27p,1695b,362s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -680,7 +680,7 @@ exlive/2015/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/201
 5/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2015/texmf-d
 ist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/
 type1/urw/times/utmri8a.pfb>
-Output written on bare_conf.pdf (6 pages, 1175672 bytes).
+Output written on bare_conf.pdf (6 pages, 1160031 bytes).
 PDF statistics:
  123 PDF objects out of 1000 (max. 8388607)
  68 compressed objects within 1 object stream
